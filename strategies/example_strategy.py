@@ -3,7 +3,7 @@ import os, sys
 from pathlib import Path
 import json 
 
-sys.path.insert(1, os.path.dirname(__file__) + '/../..')
+sys.path.insert(1, os.path.dirname(__file__) + '/..')
 user_home_path = str(Path.home())
 
 import argparse
@@ -17,9 +17,9 @@ import plotly.express as px
 import warnings
 warnings.filterwarnings("ignore")
 
-from dealer.px_handler import *
-from dealer.configparser_dealer import *
-from backtest_engine.vbt_support import *
+# from dealer.px_handler import *
+# from dealer.configparser_dealer import *
+# from backtest_engine.vbt_support import *
 
 """
 --strategy_logic ExampleStrategy  --strategy_config ERZ_ETH_30m_b03 --time_code all
