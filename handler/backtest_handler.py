@@ -20,77 +20,26 @@ def resample_data(min_data, resample_p, end_bar_time=False):
 
     return data_df
 
-def datetime_slicer(time_code, data_df, today_date, start_date: None, end_date: None):
+def datetime_slicer(time_code, data_df, start_date=None, end_date=None, count_to_now=True):
     
-    if time_code == 'all':
-        selected_data_df = data_df.loc[:today_date]
-    elif time_code == 'select':
-        selected_data_df = data_df.loc[f'{start_date} 18:30:00':f'{end_date} 18:30:00']
-    # year
-    elif time_code == '2020':
-        selected_data_df = data_df.loc['2020-01-01 18:30:00':'2021-01-01 18:30:00']
-    elif time_code == '2021':
-        selected_data_df = data_df.loc['2021-01-01 18:30:00':'2022-01-01 18:30:00']
-    elif time_code == '2022':
-        selected_data_df = data_df.loc['2022-01-01 18:30:00':f'{today_date} 18:30:00']
-    # half year
-    elif time_code == '1H20':
-        selected_data_df = data_df.loc['2020-01-01 18:30:00':'2020-07-01 18:30:00']
-    elif time_code == '2H20':
-        selected_data_df = data_df.loc['2020-07-01 18:30:00':'2021-01-01 18:30:00']
-    elif time_code == '1H21':
-        selected_data_df = data_df.loc['2021-01-01 18:30:00':'2021-07-01 18:30:00']
-    elif time_code == '2H21':
-        selected_data_df = data_df.loc['2021-07-01 18:30:00':'2022-01-01 18:30:00']
-    elif time_code == '1H22':
-        selected_data_df = data_df.loc['2022-01-01 18:30:00':'2022-07-01 18:30:00']
-    elif time_code == '2H22':
-        selected_data_df = data_df.loc['2022-07-01 18:30:00':'2023-01-01 18:30:00']
-    elif time_code == '1H23':
-        selected_data_df = data_df.loc['2023-01-01 18:30:00':'2023-07-01 18:30:00']
-    elif time_code == '2H23':
-        selected_data_df = data_df.loc['2023-07-01 18:30:00':'2024-01-01 18:30:00']
-    # quarter
-    elif time_code == '1Q20':
-        selected_data_df = data_df.loc['2020-01-01 18:30:00':'2020-04-01 18:30:00']
-    elif time_code == '2Q20':
-        selected_data_df = data_df.loc['2020-04-01 18:30:00':'2020-07-01 18:30:00']
-    elif time_code == '3Q20':
-        selected_data_df = data_df.loc['2020-07-01 18:30:00':'2020-10-01 18:30:00']
-    elif time_code == '4Q20':
-        selected_data_df = data_df.loc['2020-10-01 18:30:00':'2021-01-01 18:30:00']
-    elif time_code == '1Q21':
-        selected_data_df = data_df.loc['2021-01-01 18:30:00':'2021-04-01 18:30:00']
-    elif time_code == '2Q21':
-        selected_data_df = data_df.loc['2021-04-01 18:30:00':'2021-07-01 18:30:00']
-    elif time_code == '3Q21':
-        selected_data_df = data_df.loc['2021-07-01 18:30:00':'2021-10-01 18:30:00']
-    elif time_code == '4Q21':
-        selected_data_df = data_df.loc['2021-10-01 18:30:00':'2022-01-01 18:30:00']
-    elif time_code == '1Q22':
-        selected_data_df = data_df.loc['2022-01-01 18:30:00':'2022-04-01 18:30:00']
-    elif time_code == '2Q22':
-        selected_data_df = data_df.loc['2022-04-01 18:30:00':'2022-07-01 18:30:00']
-    elif time_code == '3Q22':
-        selected_data_df = data_df.loc['2022-07-01 18:30:00':f'2022-10-01 18:30:00']
-    elif time_code == '4Q22':
-        selected_data_df = data_df.loc['2022-10-01 18:30:00':f'2023-01-01 18:30:00'] 
-    elif time_code == '1Q23':
-        selected_data_df = data_df.loc['2023-01-01 18:30:00':f'2023-04-01 18:30:00'] 
-    elif time_code == '2Q23':
-        selected_data_df = data_df.loc['2023-04-01 18:30:00':f'2023-07-01 18:30:00'] 
-    elif time_code == '3Q23':
-        selected_data_df = data_df.loc['2023-07-01 18:30:00':f'2023-10-01 18:30:00'] 
-    elif time_code == '4Q23':
-        selected_data_df = data_df.loc['2023-10-01 18:30:00':f'2024-01-01 18:30:00'] 
-   
-    # for special request
-    elif time_code == 'R1M':
-        selected_data_df = data_df.loc['2022-10-01 18:30:00':f'{today_date} 18:30:00']
-    elif time_code == 'R3M':
-        selected_data_df = data_df.loc['2022-09-01 18:30:00':f'{today_date} 18:30:00']
+    time_code_mapping = {
+        'all': slice(None, datetime.now()),
+        'select': slice(f'{start_date} 18:30:00', f'{end_date} 18:30:00'),
+        '2020': slice('2020-01-01 18:30:00', '2021-01-01 18:30:00'),
+        '2021': slice('2021-01-01 18:30:00', '2022-01-01 18:30:00'),
+        '2022': slice('2022-01-01 18:30:00', '2023-01-01 18:30:00'),
+        '2023': slice('2023-01-01 18:30:00', '2024-01-01 18:30:00'),
+        # Add more mappings for other time codes
+    }
+    
+    if time_code in time_code_mapping:
+        selected_data_df = data_df.loc[time_code_mapping[time_code]]
     else:
-        raise ValueError('Wrong Period!')
+        raise ValueError('Time Code not defined')
+    
+    if count_to_now and time_code.isdigit():
+        year = int(time_code)
+        selected_data_df = selected_data_df.loc[f'{year}-01-01 18:30:00':datetime.now()]
     
     return selected_data_df
 
