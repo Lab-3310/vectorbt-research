@@ -1,6 +1,8 @@
 import pandas as pd
 from datetime import datetime, timedelta
 
+from types_enums.data_enum import *
+
 def resample_data(min_data, resample_p, end_bar_time=False):
     data_df = pd.DataFrame()
     for col in min_data.columns:
@@ -20,11 +22,10 @@ def resample_data(min_data, resample_p, end_bar_time=False):
 
     return data_df
 
-def datetime_slicer(time_code, data_df, start_date=None, end_date=None, count_to_now=True):
+def datetime_slicer(backtest_time, data_df, start_date=None, end_date=None, count_to_now=True):
     
-    time_code_mapping = {
+    backtest_time_mapping = {
         'all': slice(None, datetime.now()),
-        'select': slice(f'{start_date} 18:30:00', f'{end_date} 18:30:00'),
         '2020': slice('2020-01-01 18:30:00', '2021-01-01 18:30:00'),
         '2021': slice('2021-01-01 18:30:00', '2022-01-01 18:30:00'),
         '2022': slice('2022-01-01 18:30:00', '2023-01-01 18:30:00'),
@@ -32,14 +33,20 @@ def datetime_slicer(time_code, data_df, start_date=None, end_date=None, count_to
         # Add more mappings for other time codes
     }
     
-    if time_code in time_code_mapping:
-        selected_data_df = data_df.loc[time_code_mapping[time_code]]
+    if backtest_time in backtest_time_mapping:
+        selected_data_df = data_df.loc[backtest_time_mapping[backtest_time]]
     else:
-        raise ValueError('Time Code not defined')
+        raise ValueError('backtest_time is not defined!')
     
-    if count_to_now and time_code.isdigit():
-        year = int(time_code)
+    if count_to_now and backtest_time.isdigit():
+        year = int(backtest_time)
         selected_data_df = selected_data_df.loc[f'{year}-01-01 18:30:00':datetime.now()]
+    
+    if backtest_time == SELECT:
+        selected_data_df = selected_data_df.loc[f'{start_date} 18:30:00':f'{end_date} 18:30:00']
+
+    if backtest_time == ALL:
+        selected_data_df = data_df
     
     return selected_data_df
 

@@ -1,0 +1,3 @@
+
+SELECT = 'select'
+ALL = 'all'
