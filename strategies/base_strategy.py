@@ -11,7 +11,7 @@ class BaseStrategy:
         self._strategy_class = strategy_class
         self._strategy_config = strategy_config
         
-        with open(f'{os.path.dirname(__file__)}/strategies_config/{strategy_class}/{strategy_config}') as f:
+        with open(f'{os.path.dirname(__file__)}/../strategies_config/{strategy_class}/{strategy_config}.json') as f:
             config = json.loads(f.read())
         self._config = config
 
