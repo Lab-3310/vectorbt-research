@@ -17,11 +17,6 @@ class BaseStrategy:
             config = json.loads(f.read())
         self._config = config
 
-        # Common configurations
-        self._common_config_dict = None
-        # Specific configurations
-        self._specific_config_dict = {}
-
     @property
     def capital(self):
         return self._config.get(base_strategy_enum.CAPITAL, None)

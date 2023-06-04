@@ -82,26 +82,19 @@ class ExampleStrategy(BaseStrategy):
             freq = 'd' # this will change either II use what resample_p
         )
         vbt_report = vbt_func.plot()
+        vbt_report.show()
 
         # position
         position = vbt_func.asset_flow()
         position_df = pd.DataFrame({DATETIME:position.index, POSITION:position.values})
+        
         # plot position
         positionfig = px.line(position_df, x=DATETIME, y=POSITION)
         positionfig.show()
-
-        # printing 
-        print("---------")
-        print(f"Running {self._strategy_class} in config: {self._strategy_config} trading {self.asset_class} on {self.exchange} in {self.symbol} {self.resample}")
-        print("Stats")
-        print("---------")
-        vbt_report.show()
+        
+        # stats df
         stats_df = vbt_func.stats()
-        print(stats_df)
-        print("---------")
-        print("strategy metric df")
-        print(self.backtest_df.tail(5))
-        print("---------")
+
         asset_return = vbt_func.asset_returns()
         asset_value  = vbt_func.asset_value()
         cumulative_returns = vbt_func.cumulative_returns()
