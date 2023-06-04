@@ -11,7 +11,7 @@ import plotly.express as px
 import types_enums.base_strategy_enum as base_strategy_enum
 
 from strategies.base_strategy import BaseStrategy
-from vbt_handler.vbt_support import vbt_saver_printer
+# from vbt_handler.vbt_support import vbt_saver_printer
 from handler.backtest_handler import datetime_slicer
 from handler.crypto_px_handler import get_crypto_data_df
 from types_enums.vbt_enum import *
@@ -83,7 +83,6 @@ class ExampleStrategy(BaseStrategy):
 
         # 4. Run VectorBT backtest
         vbt_func, stats_df, asset_return, asset_value, cumulative_returns, position_df = self.init_vbt()
-
-        vbt_saver_printer(self._strategy_class, self._strategy_config, stats_df, position_df, self.backtest_df, vbt_func, asset_return, asset_value, cumulative_returns)
+        self.vbt_result(self._strategy_class, self._strategy_config, stats_df, position_df, self.backtest_df, vbt_func, asset_return, asset_value, cumulative_returns)
                     
 
