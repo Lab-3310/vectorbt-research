@@ -1,11 +1,9 @@
 import os
 import json
-import time
-import datetime
-import pandas as pd
 import logging
 
 import types_enums.base_strategy_enum as base_strategy_enum
+from types_enums.vbt_enum import *
 
 class BaseStrategy:
     def __init__(self, strategy_class: str, strategy_config: str):
@@ -20,7 +18,7 @@ class BaseStrategy:
     @property
     def capital(self):
         return self._config.get(base_strategy_enum.CAPITAL, None)
-
+ 
     @property
     def asset_class(self):
         return self._config.get(base_strategy_enum.ASSET_CLASS, None)
@@ -59,5 +57,7 @@ class BaseStrategy:
 
     def run_backtest(self):
         self.logger.info(f'Running Backtest - [{self._strategy_class=}, {self._strategy_config=}].')
+
+
 
 

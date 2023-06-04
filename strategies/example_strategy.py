@@ -34,6 +34,20 @@ class ExampleStrategy(BaseStrategy):
         self.SL_pct = self._config.get(base_strategy_enum.TRADING_DATA_PARAM, {}).get("SL_pct", None)
         self.TP_pct = self._config.get(base_strategy_enum.TRADING_DATA_PARAM, {}).get("TP_pct", None)
 
+    def init_vbt(self):
+        vbt_func = vbt.Portfolio.from_signals(init_cash=self.capital, sl_stop=self.SL_pct, tp_stop=self.TP_pct, close=self.backtest_df[CLOSE], entries=self.backtest_df[ENTRY_LONG], exits=self.backtest_df[EXIT_SHORT], short_entries=self.backtest_df[ENTRY_SHORT], short_exits=self.backtest_df[EXIT_SHORT], direction='both', accumulate=False, freq='d')
+        vbt_func.plot().show()
+        position_df = pd.DataFrame({DATETIME:vbt_func.asset_flow().index, POSITION:vbt_func.asset_flow().values})
+        position_fig = px.line(position_df, x=DATETIME, y=POSITION)
+        position_fig.show()
+
+        stats_df = vbt_func.stats()
+        asset_return = vbt_func.asset_returns()
+        asset_value  = vbt_func.asset_value()
+        cumulative_returns = vbt_func.cumulative_returns()
+
+        return vbt_func, stats_df, asset_return, asset_value, cumulative_returns, position_df
+    
     def run_backtest(self):
         super().run_backtest()
         # the part you design backtest trading logic
@@ -68,36 +82,8 @@ class ExampleStrategy(BaseStrategy):
         self.backtest_df['exit_short'] = np.where(CrossDown_n03 | CrossUp_00,True, False) 
 
         # 4. Run VectorBT backtest
-        vbt_func = vbt.Portfolio.from_signals(
-            init_cash=self.capital,
-            sl_stop = self.SL_pct,
-            tp_stop = self.TP_pct,
-            close = self.backtest_df[CLOSE],
-            entries = self.backtest_df[ENTRY_LONG],
-            exits = self.backtest_df[EXIT_SHORT],
-            short_entries = self.backtest_df[ENTRY_SHORT],
-            short_exits = self.backtest_df[ENTRY_SHORT],
-            direction = 'both',
-            accumulate = False,
-            freq = 'd' # this will change either II use what resample_p
-        )
-        vbt_report = vbt_func.plot()
-        vbt_report.show()
+        vbt_func, stats_df, asset_return, asset_value, cumulative_returns, position_df = self.init_vbt()
 
-        # position
-        position = vbt_func.asset_flow()
-        position_df = pd.DataFrame({DATETIME:position.index, POSITION:position.values})
-        
-        # plot position
-        positionfig = px.line(position_df, x=DATETIME, y=POSITION)
-        positionfig.show()
-        
-        # stats df
-        stats_df = vbt_func.stats()
-
-        asset_return = vbt_func.asset_returns()
-        asset_value  = vbt_func.asset_value()
-        cumulative_returns = vbt_func.cumulative_returns()
         vbt_saver_printer(self._strategy_class, self._strategy_config, stats_df, position_df, self.backtest_df, vbt_func, asset_return, asset_value, cumulative_returns)
                     
 
