@@ -72,7 +72,7 @@ class ExampleStrategy(BaseStrategy):
             init_cash=self.capital,
             sl_stop = self.SL_pct,
             tp_stop = self.TP_pct,
-            close = self.selfbacktest_df[CLOSE],
+            close = self.backtest_df[CLOSE],
             entries = self.backtest_df[ENTRY_LONG],
             exits = self.backtest_df[EXIT_SHORT],
             short_entries = self.backtest_df[ENTRY_SHORT],
