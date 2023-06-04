@@ -15,8 +15,7 @@
       "SL_mode": "static_price",
       "SL_pct": 0.03,
       "TP_mode": "static_price",
-      "TP_pct": 0.06,
-      "no_of_layer": 1
+      "TP_pct": 0.06
     },
     "backtest_setting": {
       "backtest_time": "2023",

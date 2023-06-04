@@ -25,7 +25,7 @@ class ExampleStrategy(BaseStrategy):
         super().__init__(strategy_class=strategy_class, strategy_config=strategy_config)
         self.data_df = get_crypto_data_df(self.symbol, self.use_spot, self.resample)
         self.backtest_df = datetime_slicer(self.backtest_time, self.data_df, self.start_date, self.end_date, self.count_to_now)
-        
+
         # the part you return the prepare_data_param you need in run_backtest
         self.er_p = self._config.get(base_strategy_enum.PREPARE_DATA_PARAM, {}).get("er_p", None)
         self.zscore_p = self._config.get(base_strategy_enum.PREPARE_DATA_PARAM, {}).get("zscore_p", None)
@@ -52,6 +52,7 @@ class ExampleStrategy(BaseStrategy):
         super().run_backtest()
         # the part you design backtest trading logic
         # start with self.backtest_df and appending 
+        # this is an example of self-designed indicators
         # 1. Input the strategy required data
         self.backtest_df["price_delta"] = (self.backtest_df["close"] - self.backtest_df["close"].shift(1))
         self.backtest_df["total_price_delta"] = (self.backtest_df["close"] - self.backtest_df["close"].shift(self.er_p))
@@ -77,7 +78,6 @@ class ExampleStrategy(BaseStrategy):
         # 3. Define the Long/Short in Entry/Exit 
         self.backtest_df['entry_long'] = np.where(CrossUp_01,True, False)
         self.backtest_df['entry_short'] = np.where(CrossDown_n01 ,True, False)
-
         self.backtest_df['exit_long'] = np.where(CrossUp_03 | CrossDown_00,True, False)
         self.backtest_df['exit_short'] = np.where(CrossDown_n03 | CrossUp_00,True, False) 
 

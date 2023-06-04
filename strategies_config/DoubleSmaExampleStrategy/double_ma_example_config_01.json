@@ -1,0 +1,26 @@
+{
+    "capital": 1000,
+    "asset_class": "CRYPTO",
+    "exchange": "BINANCE",
+    "symbol": "ETHUSDT_UPERP",
+    "use_spot": false,
+    "strategy_class": "DoubleSmaExampleStrategy",
+    "strategy_config": "double_ma_example_config_01",
+    "resample": "15min",
+    "prepare_data_param": {
+      "ma_p1": 50,
+      "ma_p2": 100
+    },
+    "trading_data_param": {
+      "SL_mode": "static_price",
+      "SL_pct": 0.03,
+      "TP_mode": "static_price",
+      "TP_pct": 0.06
+    },
+    "backtest_setting": {
+      "backtest_time": "2023",
+      "start_date": "",
+      "end_date": "",
+      "count_to_now": true
+    }
+  }
