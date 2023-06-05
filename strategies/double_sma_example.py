@@ -42,7 +42,7 @@ class DoubleSmaExampleStrategy(BaseStrategy):
 
         stats_df = vbt_func.stats()
         asset_return = vbt_func.asset_returns()
-        asset_value  = vbt_func.asset_value()
+        asset_value = vbt_func.asset_value()
         cumulative_returns = vbt_func.cumulative_returns()
 
         return vbt_func, stats_df, asset_return, asset_value, cumulative_returns, position_df
