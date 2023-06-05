@@ -52,7 +52,7 @@ class DoubleSmaExampleStrategy(BaseStrategy):
         # the part you design backtest trading logic
         # start with self.backtest_df and appending 
         # this is an example of double sma strategy
-        # long ibn ma cross bullish, short in ma cross bearish
+        # long when ma cross bullish, short in ma cross bearish
         
         # 1. Input the strategy required data
         self.backtest_df['ma_1'] = ta.SMA(self.backtest_df[CLOSE], timeperiod=self.ma_p1)
