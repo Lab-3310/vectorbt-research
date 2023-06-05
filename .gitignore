@@ -164,3 +164,4 @@ cython_debug/
 data_base/
 *.idea/
 config/
+backtest_notebook.ipynb
