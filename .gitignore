@@ -165,3 +165,6 @@ data_base/
 *.idea/
 config/
 backtest_notebook.ipynb
+personal_confidential.ini
+
+config_confidential/
