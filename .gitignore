@@ -164,4 +164,11 @@ cython_debug/
 data_base/
 *.idea/
 config/
+
 trader_labs/backtest_notebook.ipynb
+
+backtest_notebook.ipynb
+personal_confidential.ini
+
+config_confidential/
+
