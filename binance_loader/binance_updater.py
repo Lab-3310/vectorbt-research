@@ -18,7 +18,7 @@ from binance_ccxt.binance_px import binance_loader
 
 if __name__ == '__main__':
 
-    os.makedirs(root_path + "/lab3310", exist_ok=True)
+    # os.makedirs(root_path + "/lab3310", exist_ok=True)
     SINCE = datetime(2016, 1, 1) # for crypto
     TO = datetime.now()
     binance_loader()
