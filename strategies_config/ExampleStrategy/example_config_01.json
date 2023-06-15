@@ -3,7 +3,6 @@
     "asset_class": "CRYPTO",
     "exchange": "BINANCE",
     "symbol": "ETHUSDT_UPERP",
-    "use_spot": false,
     "strategy_class": "ExampleStrategy",
     "strategy_config": "example_config_01",
     "resample": "15min",
