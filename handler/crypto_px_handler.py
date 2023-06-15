@@ -5,12 +5,12 @@ import configparser
 
 from handler.backtest_handler import resample_data
 
-def get_crypto_data_df(symbol, resample_p=False):
+def get_crypto_data_df(symbol: str, resample_p=False):
 
     path_config = configparser.ConfigParser()
     path_config.read(f'{os.path.dirname(__file__)}/../config/path_config.ini')
 
-    if str(symbol).split("_")[-1] == "SPOT":
+    if symbol.split("_")[-1] == "SPOT":
         use_spot = True
     else:
         use_spot = False
