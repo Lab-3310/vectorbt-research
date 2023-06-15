@@ -5,10 +5,15 @@ import configparser
 
 from handler.backtest_handler import resample_data
 
-def get_crypto_data_df(symbol, use_spot=False, resample_p=False):
+def get_crypto_data_df(symbol, resample_p=False):
 
     path_config = configparser.ConfigParser()
     path_config.read(f'{os.path.dirname(__file__)}/../config/path_config.ini')
+
+    if str(symbol).split("_")[-1] == "SPOT":
+        use_spot = True
+    else:
+        use_spot = False
 
     if use_spot: # for crypto default use_spot as false is using uperp
         spot_path = path_config.get('crypto', 'binance_spot')

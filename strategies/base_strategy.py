@@ -31,9 +31,9 @@ class BaseStrategy:
     def symbol(self):
         return self._config.get(base_strategy_enum.SYMBOL, None)
 
-    @property
-    def use_spot(self):
-        return bool(self._config.get(base_strategy_enum.USE_SPOT, None))
+    # @property
+    # def use_spot(self):
+    #     return bool(self._config.get(base_strategy_enum.USE_SPOT, None))
     
     @property
     def resample(self):
