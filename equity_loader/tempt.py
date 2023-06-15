@@ -96,7 +96,78 @@ def tweq_loader():
             df = df.rename({'ts':'datetime', 'Open':'open', 'Close':'close', 'High':'high', 'Low':'low', 'Volume':'volume'}, axis=1)
             df = df[['datetime', 'open', 'high', 'low', 'close', 'volume']]
             df.to_csv(file, index=False)
- 
+
+# confident config
+confident_config = configparser.ConfigParser()
+confident_config.read(f'{user_home_path}/backtest-system-tweq/config/confidential.ini')
+person_id = confident_config['IdPwd']['person_id']
+passwd = confident_config['IdPwd']['passwd']
+
+# backtest path config
+backtest_config = configparser.ConfigParser()
+backtest_config.read(f'{user_home_path}/backtest-system-tweq/config/backtest_config.ini')
+
+def future_loader():
+
+    parser = argparse.ArgumentParser(description='tuning return plot')
+    parser.add_argument('--save_local', help="save_local", default=False)
+    parser.add_argument('--save_cloud', help="save_cloud", default=False)
+
+    args = parser.parse_args()
+    save_local = args.save_local
+    save_cloud = args.save_cloud
+
+    if save_local:
+        future_loading_path = backtest_config['paths']['local_future_path']
+        print('--------------------------------------------')
+        print('TWEQ saving in local DB:' + future_loading_path)
+        print('--------------------------------------------')
+    elif save_cloud:
+        future_loading_path = backtest_config['paths']['drive_future_path']
+        print('--------------------------------------------')
+        print('TWEQ saving in Drive:' + future_loading_path)
+        print('--------------------------------------------')
+
+    for symbol in MINI_TICKER:
+        # login
+        api = sj.Shioaji()
+        api.login(
+            person_id=person_id,
+            passwd=passwd,
+            contracts_cb=lambda security_type: print(f"{repr(security_type)} fetch done.")
+        )
+        print(f'|{symbol}|')
+        time.sleep(10)
+
+        timeframe = '1m'
+        product_type = 'future'
+        date_path = future_loading_path + '/future'
+        directory = date_path + '/minute'
+        os.makedirs(directory, exist_ok=True)
+
+        print(f'Loading {symbol}...')
+        file = f'{directory}/{symbol}_{product_type}_{timeframe}.csv'
+        if os.path.isfile(file):
+            FORMAT = '%Y-%m-%d %H:%M:%S'
+            csv_writer = CsvDealer(file, None, None, FORMAT)
+            start_dt = csv_writer.get_last_row_date_csv(format=FORMAT)
+            start_day_dt = start_dt.strftime('%Y-%m-%d')
+            kbars = api.kbars(api.Contracts.Futures[symbol], start=start_day_dt, end=TO)
+            df = pd.DataFrame({**kbars})
+            df.ts = pd.to_datetime(df.ts)
+            df = df.rename({'ts':'datetime', 'Open':'open', 'Close':'close', 'High':'high', 'Low':'low', 'Volume':'volume'}, axis=1)
+            df = df[['datetime','open','high','low','close','volume']]
+            for row in df.iterrows():
+                row=row[1]
+                csv_writer.write_if_needed([row[0], row[1], row[2], row[3], row[4], row[5]], start_dt)
+        else:
+            kbars = api.kbars(api.Contracts.Futures[symbol], start=SINCE, end=TO, timeout=300000)
+            df = pd.DataFrame({**kbars})
+            df.ts = pd.to_datetime(df.ts)
+            df = df.rename({'ts':'datetime','Open':'open', 'Close':'close', 'High':'high', 'Low':'low', 'Volume':'volume'}, axis=1)
+            df = df[['datetime','open', 'high', 'low', 'close', 'volume']]
+            df.to_csv(file, index=False)
+
 if __name__ == '__main__':
     tweq_loader()
 
