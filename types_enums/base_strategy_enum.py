@@ -15,4 +15,4 @@ START_DATE = 'start_date'
 END_DATE = 'end_date'
 COUNT_TO_NOW = 'count_to_now'
 
-
+TEST_MESSAGE = 'TEST'
