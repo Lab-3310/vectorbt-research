@@ -1,0 +1,25 @@
+{
+  "capital": 1000,
+  "asset_class": "CRYPTO",
+  "exchange": "BINANCE",
+  "symbol": "ETHUSDT_SPOT",
+  "strategy_class": "DoubleEMAPlusSMA",
+  "strategy_config": "double_ema_plus_sma_config_01",
+  "resample": "15min",
+  "prepare_data_param": {
+    "ma_p1": 60,
+    "ma_p2": 120
+  },
+  "trading_data_param": {
+    "SL_mode": "static_price",
+    "SL_pct": 0.02,
+    "TP_mode": "static_price",
+    "TP_pct": 0.1
+  },
+  "backtest_setting": {
+    "backtest_time": "2020",
+    "start_date": "",
+    "end_date": "",
+    "count_to_now": false
+  }
+}
