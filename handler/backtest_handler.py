@@ -25,27 +25,36 @@ def resample_data(min_data, resample_p, end_bar_time=False):
 def datetime_slicer(backtest_time, data_df, start_date=None, end_date=None, count_to_now=True):
     backtest_time_mapping = {
         'all': slice(None, datetime.now()),
+        'select': slice(None, datetime.now()),
         '2020': slice('2020-01-01 18:30:00', '2021-01-01 18:30:00'),
         '2021': slice('2021-01-01 18:30:00', '2022-01-01 18:30:00'),
         '2022': slice('2022-01-01 18:30:00', '2023-01-01 18:30:00'),
         '2023': slice('2023-01-01 18:30:00', '2024-01-01 18:30:00'),
         # Add more mappings for other time codes
     }
-    if backtest_time == '2020':
-        raise ValueError("2020 is not a recommended backtest time. Consider starting from 2021.") # tempt since 2020 will crash somehow
-    elif backtest_time in backtest_time_mapping:
+    
+    if backtest_time in backtest_time_mapping:
         selected_data_df = data_df.loc[backtest_time_mapping[backtest_time]]
     else:
         raise ValueError('backtest_time is not defined!')
 
     if count_to_now and backtest_time.isdigit():
         year = int(backtest_time)
+        cur_year = datetime.now().year
+        if cur_year - year >= 3:
+            raise ValueError('The backtesting period is too long. It is recommended to start from ' +  f'{cur_year - 2}.')
+        
         selected_data_df = data_df.loc[f'{year}-01-01 18:30:00':datetime.now()]
 
-    if backtest_time == 'SELECT':
-        selected_data_df = selected_data_df.loc[f'{start_date} 18:30:00':f'{end_date} 18:30:00']
+    if backtest_time == 'select':
+        date1 = datetime.strptime(start_date, '%Y-%m-%d')
+        date2 = datetime.strptime(end_date, '%Y-%m-%d')
+        if divmod((date2 - date1).total_seconds(), 31536000)[0] >= 3: # 1 year = 31536000 seconds
+            raise ValueError('The backtesting period is too long. The limitation of backtesting period is 3 years')
+        
+        selected_data_df = data_df.loc[f'{start_date} 18:30:00':f'{end_date} 18:30:00']
 
-    if backtest_time == 'ALL':
+    if backtest_time == 'all':
         selected_data_df = data_df
 
     return selected_data_df
