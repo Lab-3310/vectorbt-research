@@ -17,9 +17,9 @@
     "TP_pct": 0.1
   },
   "backtest_setting": {
-    "backtest_time": "2020",
+    "backtest_time": "2021",
     "start_date": "",
     "end_date": "",
-    "count_to_now": false
+    "count_to_now": true
   }
 }
