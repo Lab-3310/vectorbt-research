@@ -23,7 +23,6 @@ def resample_data(min_data, resample_p, end_bar_time=False):
     return data_df
 
 def datetime_slicer(backtest_time, data_df, start_date=None, end_date=None, count_to_now=True):
-    
     backtest_time_mapping = {
         'all': slice(None, datetime.now()),
         '2020': slice('2020-01-01 18:30:00', '2021-01-01 18:30:00'),
@@ -32,22 +31,23 @@ def datetime_slicer(backtest_time, data_df, start_date=None, end_date=None, coun
         '2023': slice('2023-01-01 18:30:00', '2024-01-01 18:30:00'),
         # Add more mappings for other time codes
     }
-    
-    if backtest_time in backtest_time_mapping:
+    if backtest_time == '2020':
+        raise ValueError("2020 is not a recommended backtest time. Consider starting from 2021.") # tempt since 2020 will crash somehow
+    elif backtest_time in backtest_time_mapping:
         selected_data_df = data_df.loc[backtest_time_mapping[backtest_time]]
     else:
         raise ValueError('backtest_time is not defined!')
-    
+
     if count_to_now and backtest_time.isdigit():
         year = int(backtest_time)
         selected_data_df = data_df.loc[f'{year}-01-01 18:30:00':datetime.now()]
-    
-    if backtest_time == SELECT:
+
+    if backtest_time == 'SELECT':
         selected_data_df = selected_data_df.loc[f'{start_date} 18:30:00':f'{end_date} 18:30:00']
 
-    if backtest_time == ALL:
+    if backtest_time == 'ALL':
         selected_data_df = data_df
-    
+
     return selected_data_df
 
 def ohlc_turn_cap(data: pd.DataFrame):
