@@ -171,4 +171,7 @@ backtest_notebook.ipynb
 personal_confidential.ini
 
 config_confidential/
+test/
+
+personal_confidential.ini
 

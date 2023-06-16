@@ -10,7 +10,7 @@ class SinoBroker(Enum):
     TWEQ = 'tweq'
     FUTURE = 'future'
     PERSON_ID = 'person_id'
-    PASSWD = 'pass_wd'
+    PASSWORD = 'pass_wd'
 
 
 class BaseLoader:
