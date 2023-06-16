@@ -22,7 +22,7 @@ warnings.filterwarnings('ignore')
 class BbandCrossExampleStrategy(BaseStrategy):
     def __init__(self, strategy_class: str, strategy_config: str):
         super().__init__(strategy_class=strategy_class, strategy_config=strategy_config)
-        self.data_df = get_crypto_data_df(self.symbol, self.use_spot, self.resample)
+        self.data_df = get_crypto_data_df(self.symbol, self.resample)
         self.backtest_df = datetime_slicer(self.backtest_time, self.data_df, self.start_date, self.end_date, self.count_to_now)
 
         # the part you return the prepare_data_param you need in run_backtest
