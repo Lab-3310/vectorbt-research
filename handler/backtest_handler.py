@@ -40,7 +40,7 @@ def datetime_slicer(backtest_time, data_df, start_date=None, end_date=None, coun
     
     if count_to_now and backtest_time.isdigit():
         year = int(backtest_time)
-        selected_data_df = selected_data_df.loc[f'{year}-01-01 18:30:00':datetime.now()]
+        selected_data_df = data_df.loc[f'{year}-01-01 18:30:00':datetime.now()]
     
     if backtest_time == SELECT:
         selected_data_df = selected_data_df.loc[f'{start_date} 18:30:00':f'{end_date} 18:30:00']
