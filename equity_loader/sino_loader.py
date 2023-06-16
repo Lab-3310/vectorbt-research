@@ -20,6 +20,13 @@ from types_enums.sino_enum import *
 from equity_loader.equity_list import FUTURE_TICKER
 from equity_loader.csv_handler import CsvHandler
 
+'''
+Some reference for Sino
+
+https://ithelp.ithome.com.tw/articles/10280898
+
+'''
+
 class SinoBroker(Enum):
     SINO = 'sino'
     TWEQ = 'tweq'
@@ -43,7 +50,13 @@ class SinoLoader:
         self.api = sj.Shioaji()
     
     def sino_login(self, person_id, password):
-        self.api.login(person_id=person_id, passwd=password, contracts_cb=lambda security_type: print(f"{repr(security_type)} fetch done.")) 
+        self.api.login(person_id=person_id, passwd=password, contracts_cb=lambda security_type: print(f"{repr(security_type)} fetch done."))
+        print('SINO Login!') 
+        time.sleep(5)
+    
+    def sino_logout(self):
+        self.api.logout()
+        print('SINO Logout!')
         time.sleep(5)
 
     def download_future_df(self):
@@ -72,6 +85,7 @@ class SinoLoader:
                 df = df.rename({'ts':'datetime','Open':'open', 'Close':'close', 'High':'high', 'Low':'low', 'Volume':'volume'}, axis=1)
                 df = df[['datetime','open', 'high', 'low', 'close', 'volume']]
                 df.to_csv(file, index=False)
+        self.sino_logout
 
     def get_stock_list(self):
         stock_list = np.sort(
@@ -109,5 +123,6 @@ class SinoLoader:
                 df = df.rename({'ts':'datetime', 'Open':'open', 'Close':'close', 'High':'high', 'Low':'low', 'Volume':'volume'}, axis=1)
                 df = df[['datetime', 'open', 'high', 'low', 'close', 'volume']]
                 df.to_csv(file, index=False)
+        self.sino_logout
 
         
