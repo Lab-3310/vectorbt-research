@@ -6,6 +6,7 @@
     "strategy_class": "DoubleSmaExampleStrategy",
     "strategy_config": "double_ma_example_config_01",
     "resample": "15min",
+    "fee": 0.001,
     "prepare_data_param": {
       "ma_p1": 50,
       "ma_p2": 100
