@@ -71,8 +71,5 @@ class DoubleSmaExampleStrategy(BaseStrategy):
         self.backtest_df['exit_long'] = np.where(ma_crossdown, True, False)
         self.backtest_df['exit_short'] = np.where(ma_crossup, True, False) 
 
-        # 4. Run VectorBT backtest
-        vbt_func, stats_df, asset_return, asset_value, cumulative_returns, position_df = self.init_vbt()
-        self.vbt_result(self._strategy_class, self._strategy_config, stats_df, position_df, self.backtest_df, vbt_func, asset_return, asset_value, cumulative_returns)
-                    
-
+        # 4. Generate the backtest result
+        self.generate_backtest_result()
