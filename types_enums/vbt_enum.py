@@ -8,3 +8,5 @@ EXIT_SHORT = 'exit_short'
 
 DATETIME = 'datetime'
 POSITION = 'position'
+
+MIN = 'm'

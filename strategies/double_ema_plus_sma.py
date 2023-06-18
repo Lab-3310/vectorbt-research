@@ -56,16 +56,16 @@ class DoubleEMAPlusSMA(BaseStrategy):
 
         # 2. Using the Preparation data to define logic 
         # long
-        UP_permute = (self.backtest_df['ema_1'] > self.backtest_df['ema_2']) & (self.backtest_df['ema_2'] > self.backtest_df['sma_1']) & (self.backtest_df['sma_1'] > self.backtest_df['sma_2'])
+        UP_PERMUTE = (self.backtest_df['ema_1'] > self.backtest_df['ema_2']) & (self.backtest_df['ema_2'] > self.backtest_df['sma_1']) & (self.backtest_df['sma_1'] > self.backtest_df['sma_2'])
         SMA1_CROSSUP_EMA2 = (self.backtest_df['prev_ema_2'] >= self.backtest_df['prev_sma_1']) & (self.backtest_df['ema_2'] < self.backtest_df['sma_1'])
 
         # short
-        DOWN_permute = (self.backtest_df['ema_1'] < self.backtest_df['ema_2']) & (self.backtest_df['ema_2'] < self.backtest_df['sma_1']) & (self.backtest_df['sma_1'] < self.backtest_df['sma_2'])
+        DOWN_PERMUTE = (self.backtest_df['ema_1'] < self.backtest_df['ema_2']) & (self.backtest_df['ema_2'] < self.backtest_df['sma_1']) & (self.backtest_df['sma_1'] < self.backtest_df['sma_2'])
         EMA2_CROSSUP_SMA1 = (self.backtest_df['prev_ema_2'] <= self.backtest_df['prev_sma_1']) & (self.backtest_df['ema_2'] > self.backtest_df['sma_1'])
 
         # 3. Define the Long/Short in Entry/Exit 
-        self.backtest_df['entry_long'] = np.where(UP_permute, True, False)
-        self.backtest_df['entry_short'] = np.where(DOWN_permute, True, False)
+        self.backtest_df['entry_long'] = np.where(UP_PERMUTE, True, False)
+        self.backtest_df['entry_short'] = np.where(DOWN_PERMUTE, True, False)
         self.backtest_df['exit_long'] = np.where(SMA1_CROSSUP_EMA2, True, False)
         self.backtest_df['exit_short'] = np.where(EMA2_CROSSUP_SMA1, True, False) 
 
