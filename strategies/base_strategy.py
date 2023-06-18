@@ -72,7 +72,7 @@ class BaseStrategy:
             exits=backtest_df[EXIT_SHORT], 
             short_entries=backtest_df[ENTRY_SHORT], 
             short_exits=backtest_df[EXIT_SHORT], 
-            direction='both', 
+            direction='both', # longonly # both
             accumulate=False, 
             freq=MIN # fix the bug int too big to convert
         )
@@ -80,6 +80,8 @@ class BaseStrategy:
         self.save_backtest_df(self.backtest_df, position_df, stats_df, asset_return_df, asset_value_df, cumulative_returns_df, trade_record_df)
         self.plot_cumulative_return_trades(pf_analyzer)
         self.plot_cumulative_drawdown_return(pf_analyzer)
+        
+        # self.plot_position(position_df)
         # self.plot_rolling_drawdown(pf_analyzer)
         # self.plot_drawdown_underwater(pf_analyzer)
         # self.plot_order_and_size(pf_analyzer)
@@ -141,6 +143,11 @@ class BaseStrategy:
     
     def plot_cumulative_drawdown_return(self, pf_analyzer):
         pf_analyzer.qs.plot_snapshot()
+    
+    # TODO FIX: plot got squeezed
+    def plot_position(self, position_df):
+        position_fig = px.line(position_df, x=DATETIME, y=POSITION)
+        position_fig.show()        
     
     # TODO FIX: This object already contains one column of data
     def plot_drawdown_underwater(self, pf_analyzer):
