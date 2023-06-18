@@ -34,7 +34,6 @@ class ExampleStrategy(BaseStrategy):
         self.TP_pct = self._config.get(base_strategy_enum.TRADING_DATA_PARAM, {}).get("TP_pct", None)
     
     def run_backtest(self):
-        super().run_backtest()
         # the part you design backtest trading logic
         # start with self.backtest_df and appending 
         # this is an example of self-designed indicators
@@ -66,7 +65,7 @@ class ExampleStrategy(BaseStrategy):
         self.backtest_df['exit_long'] = np.where(CrossUp_03 | CrossDown_00,True, False)
         self.backtest_df['exit_short'] = np.where(CrossDown_n03 | CrossUp_00,True, False) 
 
-        # 4. Generate the backtest result
-        self.generate_backtest_result()
+        # 4. Run Backtest
+        super().run_backtest(self.backtest_df)
       
 

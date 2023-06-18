@@ -34,7 +34,6 @@ class DoubleEMAPlusSMA(BaseStrategy):
         self.TP_pct = self._config.get(base_strategy_enum.TRADING_DATA_PARAM, {}).get("TP_pct", None)
     
     def run_backtest(self):
-        super().run_backtest()
         # the part you design backtest trading logic
         # start with self.backtest_df and appending 
         # this is an example of double sma strategy
@@ -69,5 +68,5 @@ class DoubleEMAPlusSMA(BaseStrategy):
         self.backtest_df['exit_long'] = np.where(SMA1_CROSSUP_EMA2, True, False)
         self.backtest_df['exit_short'] = np.where(EMA2_CROSSUP_SMA1, True, False) 
 
-        # 4. Generate the backtest result
-        self.generate_backtest_result()
+        # 4. Run Backtest
+        super().run_backtest(self.backtest_df)
