@@ -32,23 +32,8 @@ class DoubleSmaExampleStrategy(BaseStrategy):
         # the part you return the trading_data_param you need in run_backtest
         self.SL_pct = self._config.get(base_strategy_enum.TRADING_DATA_PARAM, {}).get("SL_pct", None)
         self.TP_pct = self._config.get(base_strategy_enum.TRADING_DATA_PARAM, {}).get("TP_pct", None)
-
-    def init_vbt(self):
-        vbt_func = vbt.Portfolio.from_signals(init_cash=self.capital, fees=self.fee, sl_stop=self.SL_pct, tp_stop=self.TP_pct, close=self.backtest_df[CLOSE], entries=self.backtest_df[ENTRY_LONG], exits=self.backtest_df[EXIT_SHORT], short_entries=self.backtest_df[ENTRY_SHORT], short_exits=self.backtest_df[EXIT_SHORT], direction='both', accumulate=False, freq='m')
-        vbt_func.plot().show()
-        position_df = pd.DataFrame({DATETIME:vbt_func.asset_flow().index, POSITION:vbt_func.asset_flow().values})
-        position_fig = px.line(position_df, x=DATETIME, y=POSITION)
-        position_fig.show()
-
-        stats_df = vbt_func.stats()
-        asset_return = vbt_func.asset_returns()
-        asset_value = vbt_func.asset_value()
-        cumulative_returns = vbt_func.cumulative_returns()
-
-        return vbt_func, stats_df, asset_return, asset_value, cumulative_returns, position_df
     
     def run_backtest(self):
-        super().run_backtest()
         # the part you design backtest trading logic
         # start with self.backtest_df and appending 
         # this is an example of double sma strategy
@@ -71,5 +56,5 @@ class DoubleSmaExampleStrategy(BaseStrategy):
         self.backtest_df['exit_long'] = np.where(ma_crossdown, True, False)
         self.backtest_df['exit_short'] = np.where(ma_crossup, True, False) 
 
-        # 4. Generate the backtest result
-        self.generate_backtest_result()
+        # 4. Run Backtest
+        super().run_backtest(self.backtest_df)

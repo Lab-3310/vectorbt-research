@@ -6,7 +6,7 @@
     "strategy_class": "DoubleSmaExampleStrategy",
     "strategy_config": "double_ma_example_config_01",
     "resample": "15min",
-    "fee": 0.001,
+    "fee": 0.004,
     "prepare_data_param": {
       "ma_p1": 50,
       "ma_p2": 100
@@ -18,7 +18,7 @@
       "TP_pct": 0.06
     },
     "backtest_setting": {
-      "backtest_time": "2023",
+      "backtest_time": "2020",
       "start_date": "",
       "end_date": "",
       "count_to_now": true
