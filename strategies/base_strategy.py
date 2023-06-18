@@ -82,6 +82,7 @@ class BaseStrategy:
         self.plot_cumulative_drawdown_return(pf_analyzer)
         # self.plot_rolling_drawdown(pf_analyzer)
         # self.plot_drawdown_underwater(pf_analyzer)
+        # self.plot_order_and_size(pf_analyzer)
         
     def get_position_df(self, pf_analyzer):
         return pd.DataFrame({DATETIME:pf_analyzer.asset_flow().index, POSITION:pf_analyzer.asset_flow().values})
@@ -141,6 +142,7 @@ class BaseStrategy:
     def plot_cumulative_drawdown_return(self, pf_analyzer):
         pf_analyzer.qs.plot_snapshot()
     
+    # TODO FIX: This object already contains one column of data
     def plot_drawdown_underwater(self, pf_analyzer):
         pf_analyzer.plot(
             subplots=['drawdowns', 'underwater'],
@@ -156,6 +158,7 @@ class BaseStrategy:
             )
         )
 
+    # TODO FIX: This object already contains one column of data
     def plot_order_and_size(self, pf_analyzer):
         order_size = pf_analyzer.orders.size.to_pd(fill_value=0.)
         fig = pf_analyzer.plot(subplots=[
@@ -171,6 +174,7 @@ class BaseStrategy:
             fig=fig
         )
     
+    # TODO FIX: This object already contains one column of data
     def plot_rolling_drawdown(self, pf_analyzer):
         subplots = [
             ('cumulative_returns', dict(
