@@ -52,8 +52,6 @@ class BbandCrossExampleStrategy(BaseStrategy):
         self.backtest_df['prev_band_upper'] = self.backtest_df['band_upper'].shift(1)
         self.backtest_df['prev_band_lower'] = self.backtest_df['band_lower'].shift(1)
 
-        #ljljdf
-
         # 2. Using the Preparation data to define logic 
         bband_upper_crossup = (self.backtest_df[CLOSE] >= self.backtest_df['band_upper']) & (self.backtest_df[PREV_CLOSE] < self.backtest_df['prev_band_upper'])
         bband_upper_crossdown = (self.backtest_df[CLOSE] <= self.backtest_df['band_upper']) & (self.backtest_df[PREV_CLOSE] > self.backtest_df['prev_band_upper'])
@@ -67,4 +65,4 @@ class BbandCrossExampleStrategy(BaseStrategy):
         self.backtest_df['exit_short'] = np.where(bband_lower_crossup, True, False) 
 
         # 4. Run Backtest
-        super().run_backtest(self.backtest_df)
+        super().run_backtest(self.backtest_df, self.resample)

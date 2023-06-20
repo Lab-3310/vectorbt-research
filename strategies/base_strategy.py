@@ -58,11 +58,11 @@ class BaseStrategy:
     def count_to_now(self):
         return self._config.get(base_strategy_enum.BACKTEST_SETTING, {}).get(base_strategy_enum.COUNT_TO_NOW, None)
 
-    def run_backtest(self, backtest_df):
+    def run_backtest(self, backtest_df, freq):
         self.logger.info(f'Running Backtest - [{self._strategy_class=}, {self._strategy_config=}].')
-        self.backtest_execution(backtest_df)
+        self.backtest_execution(backtest_df, freq)
 
-    def backtest_execution(self, backtest_df):
+    def backtest_execution(self, backtest_df, freq):
         pf_analyzer = vbt.Portfolio.from_signals(
             init_cash=self.capital, 
             sl_stop=self.SL_pct, 
@@ -74,7 +74,7 @@ class BaseStrategy:
             short_exits=backtest_df[EXIT_SHORT], 
             direction='both', # longonly # both
             accumulate=False, 
-            freq=MIN # fix the bug int too big to convert
+            freq=freq # fix the bug int too big to convert
         )
         position_df, stats_df, asset_return_df, asset_value_df, cumulative_returns_df, trade_record_df = self.build_backtest_df(pf_analyzer)
         self.save_backtest_df(self.backtest_df, position_df, stats_df, asset_return_df, asset_value_df, cumulative_returns_df, trade_record_df)
