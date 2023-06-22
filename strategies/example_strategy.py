@@ -43,9 +43,10 @@ class ExampleStrategy(BaseStrategy):
         self.backtest_df["delta_abs_sum"] = ta.SUM(self.backtest_df["price_delta"].abs(), timeperiod=self.er_p)
         self.backtest_df["efficiency_ratio"] = self.backtest_df["total_price_delta"]/self.backtest_df["delta_abs_sum"]
         self.backtest_df["prev_efficiency_ratio"] = self.backtest_df["efficiency_ratio"].shift(1)
+
         self.backtest_df["efficiency_ratio_avg"] = ta.SMA(self.backtest_df["efficiency_ratio"], timeperiod=self.er_p)
         self.backtest_df["efficiency_ratio_stddev"] = ta.STDDEV(self.backtest_df["efficiency_ratio"], timeperiod=self.er_p)
-        self.backtest_df["efficiency_ratio_zscore"] = (self.backtest_df["prev_efficiency_ratio"] - self.backtest_df["efficiency_ratio_avg"])/self.backtest_df["efficiency_ratio_stddev"]
+        self.backtest_df["efficiency_ratio_zscore"] = (self.backtest_df["efficiency_ratio"] - self.backtest_df["efficiency_ratio_avg"])/self.backtest_df["efficiency_ratio_stddev"]
         self.backtest_df["prev_efficiency_ratio_zscore"] = self.backtest_df["efficiency_ratio_zscore"].shift(1)
 
         # 2. Using the Preparation data to define logic 
