@@ -67,6 +67,6 @@ class ExampleStrategy(BaseStrategy):
         self.backtest_df['exit_short'] = np.where(CrossDown_n03 | CrossUp_00,True, False) 
 
         # 4. Run Backtest
-        super().run_backtest(self.backtest_df, self.resample)
+        super().run_backtest(self.backtest_df)
       
 

@@ -62,11 +62,11 @@ class BaseStrategy:
     def count_to_now(self):
         return self._config.get(base_strategy_enum.BACKTEST_SETTING, {}).get(base_strategy_enum.COUNT_TO_NOW, None)
 
-    def run_backtest(self, backtest_df, freq):
+    def run_backtest(self, backtest_df):
         self.logger.info(f'Running Backtest - [{self._strategy_class=}, {self._strategy_config=}].')
-        self.backtest_execution(backtest_df, freq)
+        self.backtest_execution(backtest_df)
 
-    def backtest_execution(self, backtest_df, freq):
+    def backtest_execution(self, backtest_df):
         if self.direction == 'both':
             pf_analyzer = vbt.Portfolio.from_signals(
                 init_cash=self.capital, 
@@ -79,7 +79,7 @@ class BaseStrategy:
                 short_exits=backtest_df[EXIT_SHORT],
                 direction=self.direction, # both
                 accumulate=False, 
-                freq=freq, # fix the bug int too big to convert
+                freq=self.resample, # fix the bug int too big to convert
                 fees=self.fee
             )
         elif self.direction == 'longonly':
@@ -92,7 +92,7 @@ class BaseStrategy:
                 exits=backtest_df[EXIT_LONG], 
                 direction=self.direction, # longonly
                 accumulate=False, 
-                freq=freq, # fix the bug int too big to convert
+                freq=self.resample, # fix the bug int too big to convert
                 fees=self.fee
             )
         elif self.direction == 'shortonly':
@@ -105,7 +105,7 @@ class BaseStrategy:
                 short_exits=backtest_df[EXIT_SHORT],
                 direction=self.direction, # shortonly
                 accumulate=False, 
-                freq=freq, # fix the bug int too big to convert
+                freq=self.resample, # fix the bug int too big to convert
                 fees=self.fee
             )
 

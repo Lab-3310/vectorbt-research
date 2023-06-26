@@ -73,4 +73,4 @@ class BbandCrossMeanReversionStrategy(BaseStrategy):
         self.backtest_df['exit_short'] = np.where(bband_lower_crossup, True, False) 
 
         # 4. Run Backtest
-        super().run_backtest(self.backtest_df, self.resample)
+        super().run_backtest(self.backtest_df)
