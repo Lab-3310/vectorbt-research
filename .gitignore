@@ -182,3 +182,5 @@ download_config_mac.ini
 download_config_window.ini
 path_config.ini
 
+*.ipynb
+
