@@ -177,6 +177,10 @@ personal_confidential.ini
 
 trader_labs/
 
-config/download_config_mac.ini
-config/download_config_window.ini
-config/path_config.ini
+
+download_config_mac.ini
+download_config_window.ini
+path_config.ini
+
+*.ipynb
+
