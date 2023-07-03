@@ -8,7 +8,7 @@ from handler.backtest_handler import resample_data
 def get_crypto_data_df(symbol: str, resample_p=False):
 
     path_config = configparser.ConfigParser()
-    path_config.read(f'{os.path.dirname(__file__)}/../config/path_config.ini')
+    path_config.read(f'{os.path.dirname(__file__)}/../config/config.ini')
 
     if symbol.split("_")[-1] == "SPOT":
         use_spot = True
