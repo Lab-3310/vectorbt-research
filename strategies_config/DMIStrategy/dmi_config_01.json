@@ -9,8 +9,8 @@
   "fee": 0.004,
   "direction": "both",
   "prepare_data_param": {
-    "dm_p": 12,
-    "di_p": 288
+    "dm_p": 288,
+    "di_p": 4032
     
   },
   "trading_data_param": {

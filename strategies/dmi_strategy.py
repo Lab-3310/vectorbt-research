@@ -39,17 +39,17 @@ class DMIStrategy(BaseStrategy):
         # this is an example of self-designed indicators
         # 1. Input the strategy required data
         self.backtest_df['recent_high'] = self.backtest_df['high'].rolling(self.dm_p).max()
-        self.backtest_df['recent_low']  = self.backtest_df['low'].rolling( self.dm_p).min()
+        self.backtest_df['recent_low'] = self.backtest_df['low'].rolling( self.dm_p).min()
         self.backtest_df['last_high'] = self.backtest_df['recent_high'].shift(self.dm_p)
-        self.backtest_df['last_low']  = self.backtest_df['recent_low'].shift( self.dm_p)
-        self.backtest_df['last_close']  = self.backtest_df['close'].shift(self.dm_p)
+        self.backtest_df['last_low'] = self.backtest_df['recent_low'].shift( self.dm_p)
+        self.backtest_df['last_close'] = self.backtest_df['close'].shift(self.dm_p)
 
         self.backtest_df['+dm'] = self.backtest_df['recent_high'] - self.backtest_df['last_high']
-        self.backtest_df['-dm'] = self.backtest_df['recent_low']  - self.backtest_df['last_low']
+        self.backtest_df['-dm'] = self.backtest_df['recent_low'] - self.backtest_df['last_low']
 
-        self.backtest_df['tr1'] = self.backtest_df['recent_high']-self.backtest_df['recent_low']
-        self.backtest_df['tr2'] = self.backtest_df['recent_high']-self.backtest_df['last_close']
-        self.backtest_df['tr3'] = self.backtest_df['recent_low']-self.backtest_df['last_close']
+        self.backtest_df['tr1'] = self.backtest_df['recent_high'] - self.backtest_df['recent_low']
+        self.backtest_df['tr2'] = self.backtest_df['recent_high'] - self.backtest_df['last_close']
+        self.backtest_df['tr3'] = self.backtest_df['recent_low'] - self.backtest_df['last_close']
         self.backtest_df['tr'] = self.backtest_df[['tr1', 'tr2', 'tr3']].max(axis='columns')
         
         self.backtest_df['+di'] = self.backtest_df['+dm'].rolling(self.di_p).mean()/self.backtest_df['tr'].rolling(self.di_p).mean()
@@ -67,10 +67,10 @@ class DMIStrategy(BaseStrategy):
 
 
         # 3. Define the Long/Short in Entry/Exit 
-        self.backtest_df['entry_long']  = np.where( (CrossUp),  True, False)
-        self.backtest_df['entry_short'] = np.where( (CrossDown), True, False)
-        self.backtest_df['exit_long']  = np.where( (CrossDown), True, False)
-        self.backtest_df['exit_short'] = np.where( (CrossUp), True, False)
+        self.backtest_df['entry_long'] = np.where(CrossUp, True, False)
+        self.backtest_df['entry_short'] = np.where(CrossDown, True, False)
+        self.backtest_df['exit_long'] = np.where(CrossDown, True, False)
+        self.backtest_df['exit_short'] = np.where(CrossUp, True, False)
 
         # 4. Run Backtest
         super().run_backtest(self.backtest_df)

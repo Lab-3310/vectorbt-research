@@ -9,3 +9,5 @@ from .double_ema_plus_sma import DoubleEMAPlusSMA
 from .double_sma_example import DoubleSmaExampleStrategy
 from .example_strategy import ExampleStrategy
 from .stdma_strategy import STDMAStrategy
+from .dmi_strategy import DMIStrategy
+
