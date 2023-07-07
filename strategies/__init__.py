@@ -10,4 +10,5 @@ from .double_sma_example import DoubleSmaExampleStrategy
 from .example_strategy import ExampleStrategy
 from .stdma_strategy import STDMAStrategy
 from .dmi_strategy import DMIStrategy
+from .momentum_strategy import MomentumStrategy
 
