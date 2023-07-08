@@ -163,7 +163,7 @@ cython_debug/
 *.DS_Store
 data_base/
 *.idea/
-config/
+config/config.ini
 
 trader_labs/backtest_notebook.ipynb
 

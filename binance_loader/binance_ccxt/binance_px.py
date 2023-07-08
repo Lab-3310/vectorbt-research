@@ -113,9 +113,9 @@ def binance_loader():
     download_config = configparser.ConfigParser()
     # different ops read different config path
     if platform.system() == "Darwin":
-        download_config.read('./config/download_config_mac.ini')
+        binance_download_path = download_config.get('binance', 'mac_path')
     elif platform.system() == "Windows":
-        download_config.read('./config/download_config_window.ini')
+        binance_download_path = download_config.get('binance', 'window_path')
 
     binance_download_path = download_config.get('binance', 'path')
 
