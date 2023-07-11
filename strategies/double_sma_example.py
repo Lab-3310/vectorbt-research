@@ -57,4 +57,4 @@ class DoubleSmaExampleStrategy(BaseStrategy):
         self.backtest_df['exit_short'] = np.where(ma_crossup, True, False) 
 
         # 4. Run Backtest
-        super().run_backtest(self.backtest_df, self.resample)
+        super().run_backtest(self.backtest_df)

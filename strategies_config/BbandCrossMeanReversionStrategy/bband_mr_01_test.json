@@ -2,15 +2,16 @@
     "capital": 1000,
     "asset_class": "CRYPTO",
     "exchange": "BINANCE",
-    "symbol": "ETHUSDT_UPERP",
-    "strategy_class": "DoubleSmaExampleStrategy",
-    "strategy_config": "double_ma_example_config_01",
-    "resample": "8h",
-    "fee": 0.004,
+    "symbol": "BTCUSDT_UPERP",
+    "strategy_class": "BbandCrossMeanReversionStrategy",
+    "strategy_config": "bband_mr_01_test",
+    "resample": "30min",
+    "fee": 0.008,
     "direction": "both",
     "prepare_data_param": {
-      "ma_p1": 50,
-      "ma_p2": 100
+      "filter_ma_p": 100,
+      "bband_p": 80,
+      "bband_stddev": 3
     },
     "trading_data_param": {
       "SL_mode": "static_price",
@@ -19,9 +20,9 @@
       "TP_pct": 0.06
     },
     "backtest_setting": {
-      "backtest_time": "select",
-      "start_date": "2022-06-01",
-      "end_date": "2023-02-08",
+      "backtest_time": "2023",
+      "start_date": "",
+      "end_date": "",
       "count_to_now": true
     }
   }

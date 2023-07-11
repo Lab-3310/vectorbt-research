@@ -35,12 +35,16 @@ class BaseStrategy:
         return self._config.get(base_strategy_enum.SYMBOL, None)
     
     @property
+    def resample(self):
+        return self._config.get(base_strategy_enum.RESAMPLE, None)
+    
+    @property
     def fee(self):
         return self._config.get(base_strategy_enum.FEE, None)
     
     @property
-    def resample(self):
-        return self._config.get(base_strategy_enum.RESAMPLE, None)
+    def direction(self):
+        return self._config.get(base_strategy_enum.DIRECTION, None)
 
     @property
     def backtest_time(self):
@@ -58,24 +62,53 @@ class BaseStrategy:
     def count_to_now(self):
         return self._config.get(base_strategy_enum.BACKTEST_SETTING, {}).get(base_strategy_enum.COUNT_TO_NOW, None)
 
-    def run_backtest(self, backtest_df, freq):
+    def run_backtest(self, backtest_df):
         self.logger.info(f'Running Backtest - [{self._strategy_class=}, {self._strategy_config=}].')
-        self.backtest_execution(backtest_df, freq)
+        self.backtest_execution(backtest_df)
 
-    def backtest_execution(self, backtest_df, freq):
-        pf_analyzer = vbt.Portfolio.from_signals(
-            init_cash=self.capital, 
-            sl_stop=self.SL_pct, 
-            tp_stop=self.TP_pct, 
-            close=backtest_df[CLOSE], 
-            entries=backtest_df[ENTRY_LONG], 
-            exits=backtest_df[EXIT_SHORT], 
-            short_entries=backtest_df[ENTRY_SHORT], 
-            short_exits=backtest_df[EXIT_SHORT], 
-            direction='both', # longonly # both
-            accumulate=False, 
-            freq=freq # fix the bug int too big to convert
-        )
+    def backtest_execution(self, backtest_df):
+        if self.direction == 'both':
+            pf_analyzer = vbt.Portfolio.from_signals(
+                init_cash=self.capital, 
+                sl_stop=self.SL_pct, 
+                tp_stop=self.TP_pct, 
+                close=backtest_df[CLOSE], 
+                entries=backtest_df[ENTRY_LONG], 
+                exits=backtest_df[EXIT_LONG], 
+                short_entries=backtest_df[ENTRY_SHORT], 
+                short_exits=backtest_df[EXIT_SHORT],
+                direction=self.direction, # both
+                accumulate=False, 
+                freq=self.resample, # fix the bug int too big to convert
+                fees=self.fee
+            )
+        elif self.direction == 'longonly':
+            pf_analyzer = vbt.Portfolio.from_signals(
+                init_cash=self.capital, 
+                sl_stop=self.SL_pct,
+                tp_stop=self.TP_pct, 
+                close=backtest_df[CLOSE], 
+                entries=backtest_df[ENTRY_LONG], 
+                exits=backtest_df[EXIT_LONG], 
+                direction=self.direction, # longonly
+                accumulate=False, 
+                freq=self.resample, # fix the bug int too big to convert
+                fees=self.fee
+            )
+        elif self.direction == 'shortonly':
+            pf_analyzer = vbt.Portfolio.from_signals(
+                init_cash=self.capital, 
+                sl_stop=self.SL_pct, 
+                tp_stop=self.TP_pct, 
+                close=backtest_df[CLOSE], 
+                short_entries=backtest_df[ENTRY_SHORT], 
+                short_exits=backtest_df[EXIT_SHORT],
+                direction=self.direction, # shortonly
+                accumulate=False, 
+                freq=self.resample, # fix the bug int too big to convert
+                fees=self.fee
+            )
+
         position_df, stats_df, asset_return_df, asset_value_df, cumulative_returns_df, trade_record_df = self.build_backtest_df(pf_analyzer)
         self.save_backtest_df(self.backtest_df, position_df, stats_df, asset_return_df, asset_value_df, cumulative_returns_df, trade_record_df)
         self.plot_cumulative_return_trades(pf_analyzer)

@@ -2,24 +2,26 @@
   "capital": 1000,
   "asset_class": "CRYPTO",
   "exchange": "BINANCE",
-  "symbol": "ETHUSDT_SPOT",
-  "strategy_class": "DoubleEMAPlusSMA",
-  "strategy_config": "double_ema_plus_sma_config_01",
-  "resample": "15min",
+  "symbol": "ETHUSDT_UPERP",
+  "strategy_class": "STDMAStrategy",
+  "strategy_config": "stdma_config_01",
+  "resample": "5min",
   "fee": 0.004,
   "direction": "both",
   "prepare_data_param": {
-    "ma_p1": 60,
-    "ma_p2": 120
+    "ret_p": 1,
+    "zscore_p": 72,
+    "ma_p": 6
+    
   },
   "trading_data_param": {
     "SL_mode": "static_price",
-    "SL_pct": 0.02,
+    "SL_pct": 0.03,
     "TP_mode": "static_price",
-    "TP_pct": 0.1
+    "TP_pct": 0.06
   },
   "backtest_setting": {
-    "backtest_time": "2021",
+    "backtest_time": "2023",
     "start_date": "",
     "end_date": "",
     "count_to_now": true

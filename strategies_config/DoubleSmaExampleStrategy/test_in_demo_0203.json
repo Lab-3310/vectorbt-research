@@ -5,23 +5,23 @@
     "symbol": "ETHUSDT_UPERP",
     "strategy_class": "DoubleSmaExampleStrategy",
     "strategy_config": "double_ma_example_config_01",
-    "resample": "8h",
+    "resample": "1h",
     "fee": 0.004,
     "direction": "both",
     "prepare_data_param": {
-      "ma_p1": 50,
-      "ma_p2": 100
+      "ma_p1": 6,
+      "ma_p2": 12
     },
     "trading_data_param": {
       "SL_mode": "static_price",
-      "SL_pct": 0.03,
+      "SL_pct": 0.02,
       "TP_mode": "static_price",
-      "TP_pct": 0.06
+      "TP_pct": 0.03
     },
     "backtest_setting": {
-      "backtest_time": "select",
-      "start_date": "2022-06-01",
-      "end_date": "2023-02-08",
-      "count_to_now": true
+      "backtest_time": "2022",
+      "start_date": "",
+      "end_date": "",
+      "count_to_now": false
     }
   }
