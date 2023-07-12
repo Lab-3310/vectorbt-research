@@ -50,9 +50,14 @@ class MA_layer_strategy(BaseStrategy):
         # 2. Using the Preparation data to define logic 
         CrossUp_01 =(self.backtest_df['close']>self.backtest_df['ma_layer'])&(self.backtest_df['close']<self.backtest_df['pre_ma_layer'])
         CrossUp_02 = (self.backtest_df['close']<self.backtest_df['ma_layer'])&(self.backtest_df['close']>self.backtest_df['pre_ma_layer'])
+        CrossDown_01= self.backtest_df['close'] ==0
+        CrossDown_02= self.backtest_df['close']==0
+
         # 3. Define the Long/Short in Entry/Exit 
         self.backtest_df['entry_long'] = np.where(CrossUp_01,True, False)
         self.backtest_df['exit_long'] = np.where(CrossUp_02 ,True, False)
+        self.backtest_df['entry_short'] = np.where(CrossDown_01,True, False)
+        self.backtest_df['exit_short'] = np.where(CrossDown_02 ,True, False)
  
 
         # 4. Run Backtest
