@@ -102,27 +102,22 @@ def get_start_dt(symbols_detail_map, symbol):
     return start_dt
 
 def binance_loader():
+
     '''
     --symbol_list select --timeframe 1d --product UPERP
     '''
 
     sys.path.append(f'{root_path}/vectorbt-research')
 
-    # Get the path to the config.ini file based on the user's operating system
-    if platform.system() == "Darwin":
-        config_path = os.path.expanduser('~/vectorbt-research/config/config.ini')
-    elif platform.system() == "Windows":
-        config_path = os.path.expanduser(r'C:\Users\<username>\vectorbt-research\config\config.ini')
 
     download_config = configparser.ConfigParser()
-    # Load the config.ini file
-    download_config.read(config_path)
-
-    # Retrieve the value based on the platform
+    # different ops read different config path
     if platform.system() == "Darwin":
-        binance_download_path = download_config.get('binance', 'mac_path')
+         download_config.read('./config/download_config_mac.ini')
     elif platform.system() == "Windows":
-        binance_download_path = download_config.get('binance', 'window_path')
+         download_config.read('./config/download_config_window.ini')
+
+    binance_download_path = download_config.get('binance', 'path')
 
     # create the database path file you designated
     os.makedirs(binance_download_path, exist_ok=True)

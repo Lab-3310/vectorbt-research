@@ -5,9 +5,8 @@
     "symbol": "ETHUSDT_UPERP",
     "strategy_class": "DoubleSmaExampleStrategy",
     "strategy_config": "double_ma_example_config_01",
-    "resample": "8h",
+    "resample": "15min",
     "fee": 0.004,
-    "direction": "both",
     "prepare_data_param": {
       "ma_p1": 50,
       "ma_p2": 100
@@ -19,9 +18,9 @@
       "TP_pct": 0.06
     },
     "backtest_setting": {
-      "backtest_time": "select",
-      "start_date": "2022-06-01",
-      "end_date": "2023-02-08",
+      "backtest_time": "2020",
+      "start_date": "",
+      "end_date": "",
       "count_to_now": true
     }
   }

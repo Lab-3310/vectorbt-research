@@ -163,7 +163,7 @@ cython_debug/
 *.DS_Store
 data_base/
 *.idea/
-config/config.ini
+config/
 
 trader_labs/backtest_notebook.ipynb
 
@@ -176,11 +176,5 @@ test/
 personal_confidential.ini
 
 trader_labs/
-
-
-download_config_mac.ini
-download_config_window.ini
-path_config.ini
-
-*.ipynb
-
+DoubleEMAPlusSMA.ipynb
+example_strategy.ipynb
