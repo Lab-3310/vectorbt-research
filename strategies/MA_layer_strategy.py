@@ -19,15 +19,15 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-class Allen_average_SSM(BaseStrategy):
+class MA_layer_strategy(BaseStrategy):
     def __init__(self, strategy_class: str, strategy_config: str):
         super().__init__(strategy_class=strategy_class, strategy_config=strategy_config)
         self.data_df = get_crypto_data_df(self.symbol, self.resample)
         self.backtest_df = datetime_slicer(self.backtest_time, self.data_df, self.start_date, self.end_date, self.count_to_now)
 
         # the part you return the prepare_data_param you need in run_backtest
-        self.ma1 = self._config.get(base_strategy_enum.PREPARE_DATA_PARAM, {}).get("ma1", None)
-        self.ma2 = self._config.get(base_strategy_enum.PREPARE_DATA_PARAM, {}).get("ma2", None)
+        self.ma = self._config.get(base_strategy_enum.PREPARE_DATA_PARAM, {}).get("ma", None)
+        self.layer = self._config.get(base_strategy_enum.PREPARE_DATA_PARAM, {}).get("layer", None)
 
         # the part you return the trading_data_param you need in run_backtest
         self.SL_pct = self._config.get(base_strategy_enum.TRADING_DATA_PARAM, {}).get("SL_pct", None)
@@ -38,14 +38,18 @@ class Allen_average_SSM(BaseStrategy):
         # start with self.backtest_df and appending 
         # this is an example of self-designed indicators
         # 1. Input the strategy required data
-        self.backtest_df["ma_layer_1"] = ta.SMA(self.backtest_df['close'],timeperiod = self.ma1)
-        self.backtest_df["ma_layer_2"] = ta.SMA(self.backtest_df['ma_layer_1'],timeperiod = self.ma2)
-        self.backtest_df["pre_ma_layer_2"] = self.backtest_df["ma_layer_2"].shift(1)
+
+        self.backtest_df["ma_layer"] = self.backtest_df['close']
+
+        for i in range(self.layer):
+            self.backtest_df["ma_layer"] = ta.SMA(self.backtest_df["ma_layer"],timeperiod = self.ma)
+
+        self.backtest_df["pre_ma_layer"] = self.backtest_df["ma_layer"].shift(1)
 
 
         # 2. Using the Preparation data to define logic 
-        CrossUp_01 =(self.backtest_df['close']>self.backtest_df['ma_layer_2'])&(self.backtest_df['close']<self.backtest_df['pre_ma_layer_2'])
-        CrossUp_02 = (self.backtest_df['close']<self.backtest_df['ma_layer_2'])&(self.backtest_df['close']>self.backtest_df['pre_ma_layer_2'])
+        CrossUp_01 =(self.backtest_df['close']>self.backtest_df['ma_layer'])&(self.backtest_df['close']<self.backtest_df['pre_ma_layer'])
+        CrossUp_02 = (self.backtest_df['close']<self.backtest_df['ma_layer'])&(self.backtest_df['close']>self.backtest_df['pre_ma_layer'])
         # 3. Define the Long/Short in Entry/Exit 
         self.backtest_df['entry_long'] = np.where(CrossUp_01,True, False)
         self.backtest_df['exit_long'] = np.where(CrossUp_02 ,True, False)
