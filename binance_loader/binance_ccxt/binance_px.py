@@ -106,54 +106,43 @@ def binance_loader():
     '''
     --symbol_list select --timeframe 1d --product UPERP
     '''
-
     sys.path.append(f'{root_path}/vectorbt-research')
-
     # Get the path to the config.ini file based on the user's operating system
     if platform.system() == "Darwin":
         config_path = os.path.expanduser('~/vectorbt-research/config/config.ini')
     elif platform.system() == "Windows":
-        config_path = os.path.expanduser(r'C:\Users\<username>\vectorbt-research\config\config.ini')
-
+        config_path = os.path.expanduser(r'C:\Users\user\vectorbt-research\config\config.ini')
     download_config = configparser.ConfigParser()
     # Load the config.ini file
     download_config.read(config_path)
-
     # Retrieve the value based on the platform
     if platform.system() == "Darwin":
         binance_download_path = download_config.get('binance', 'mac_path')
     elif platform.system() == "Windows":
         binance_download_path = download_config.get('binance', 'window_path')
-
     # create the database path file you designated
     os.makedirs(binance_download_path, exist_ok=True)
-
     parser = argparse.ArgumentParser(description='symbol and timeframe')
     parser.add_argument('--symbol_list', help="symbol")
     parser.add_argument('--timeframe', help="timeframe", default='1m')
     parser.add_argument("--product", required=True, help="SPOT USD COIN.")
     args = parser.parse_args()
-
     symbol_list = args.symbol_list
     product = args.product
     timeframe = args.timeframe
-
     if product == 'SPOT':
         data_path = f'{binance_download_path}/BINANCE/SPOT/{timeframe}'
     elif product == 'UPERP':
         data_path = f'{binance_download_path}/BINANCE/UPERP/{timeframe}'
     elif product == 'CPERP':
         data_path = f'{binance_download_path}/BINANCE/CPERP/{timeframe}'
-
     os.makedirs(data_path, exist_ok=True)
-
     if product == 'SPOT':
         client = ccxt.binance()
     elif product == 'UPERP':
         client = ccxt.binanceusdm()
     elif product == 'CPERP':
         client = ccxt.binancecoinm()
-
     if symbol_list == 'all':
         symbol_details = client.fetch_markets()
         for i in symbol_details:
@@ -162,12 +151,10 @@ def binance_loader():
             start_dt = symbol_onboard_date if symbol_onboard_date > SINCE else SINCE
             print(f'Getting data: {start_dt}, {symbol_}, {timeframe}')
             paginate(client, symbol_, timeframe, data_path, product, start_dt, TO)
-
     elif symbol_list == 'select':
         for symbol in select_symbol:
             print(f'Getting data: {SINCE}, {symbol}, {timeframe}')
             paginate(client, symbol, timeframe, data_path, product, SINCE, TO)
-
     else:
         symbol_details = client.fetch_markets()
         symbols = [i['symbol'] for i in symbol_details]
@@ -176,7 +163,6 @@ def binance_loader():
             start_dt = symbol_onboard_date if symbol_onboard_date > SINCE else SINCE
         else:
             start_dt = SINCE
-
         print(f'Getting data: {start_dt}, {symbol}, {timeframe}')
         paginate(client, symbol, timeframe, data_path, product, start_dt, TO)
     print('Saved data.')
