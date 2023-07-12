@@ -7,7 +7,6 @@
     "strategy_config": "bband_cross_example_config_01",
     "resample": "15min",
     "fee": 0.004,
-    "direction": "both",
     "prepare_data_param": {
       "bband_p": 50,
       "bband_stddev": 2.5

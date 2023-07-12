@@ -5,7 +5,6 @@ EXCHANGE = 'exchange'
 SYMBOL = 'symbol'
 RESAMPLE = 'resample'
 FEE = 'fee'
-DIRECTION = 'direction'
 
 PREPARE_DATA_PARAM = 'prepare_data_param'
 TRADING_DATA_PARAM = 'trading_data_param'

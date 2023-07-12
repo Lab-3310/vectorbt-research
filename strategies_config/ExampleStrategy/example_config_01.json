@@ -7,7 +7,6 @@
     "strategy_config": "example_config_01",
     "resample": "15min",
     "fee": 0.001,
-    "direction": "both",
     "prepare_data_param": {
       "er_p": 80,
       "zscore_p": 75
