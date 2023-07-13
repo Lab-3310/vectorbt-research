@@ -9,8 +9,9 @@
     "fee": 0.001,
     "direction": "longonly",
     "prepare_data_param": {
-      "ma": 2,
-      "layer": 5
+      "ma": 8,
+      "layer": 4
+
     },
     "trading_data_param": {
       "SL_mode": "static_price",
