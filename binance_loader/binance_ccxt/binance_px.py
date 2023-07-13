@@ -108,10 +108,13 @@ def binance_loader():
     '''
     sys.path.append(f'{root_path}/vectorbt-research')
     # Get the path to the config.ini file based on the user's operating system
-    if platform.system() == "Darwin":
-        config_path = os.path.expanduser('~/vectorbt-research/config/config.ini')
-    elif platform.system() == "Windows":
-        config_path = os.path.expanduser(root_path + r'\vectorbt-research\config\config.ini')
+
+    config_path = os.path.expanduser('~/vectorbt-research/config/config.ini')
+
+    # if platform.system() == "Darwin":
+    #     config_path = os.path.expanduser('~/vectorbt-research/config/config.ini')
+    # elif platform.system() == "Windows":
+    #     config_path = os.path.expanduser(root_path + r'\vectorbt-research\config\config.ini')
     download_config = configparser.ConfigParser()
     # Load the config.ini file
     download_config.read(config_path)
