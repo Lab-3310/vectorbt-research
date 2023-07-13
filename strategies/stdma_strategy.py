@@ -26,9 +26,9 @@ class STDMAStrategy(BaseStrategy):
         self.backtest_df = datetime_slicer(self.backtest_time, self.data_df, self.start_date, self.end_date, self.count_to_now)
 
         # the part you return the prepare_data_param you need in run_backtest
-        self.ret_p    = self._config.get(base_strategy_enum.PREPARE_DATA_PARAM, {}).get("ret_p", None)
+        self.ret_p = self._config.get(base_strategy_enum.PREPARE_DATA_PARAM, {}).get("ret_p", None)
         self.zscore_p = self._config.get(base_strategy_enum.PREPARE_DATA_PARAM, {}).get("zscore_p", None)
-        self.ma_p     = self._config.get(base_strategy_enum.PREPARE_DATA_PARAM, {}).get("ma_p", None)
+        self.ma_p = self._config.get(base_strategy_enum.PREPARE_DATA_PARAM, {}).get("ma_p", None)
 
         # the part you return the trading_data_param you need in run_backtest
         self.SL_pct = self._config.get(base_strategy_enum.TRADING_DATA_PARAM, {}).get("SL_pct", None)
@@ -53,21 +53,21 @@ class STDMAStrategy(BaseStrategy):
   
 
         # 2. Using the Preparation data to define logic
-        std_Up   = (self.backtest_df['std_above']==1)
+        std_Up = (self.backtest_df['std_above']==1)
         std_Down = (self.backtest_df['std_above']==0)
-        std_CrossUp   = (self.backtest_df['prev_std_above']==0) & (self.backtest_df['std_above']==1)
+        std_CrossUp = (self.backtest_df['prev_std_above']==0) & (self.backtest_df['std_above']==1)
         std_CrossDown = (self.backtest_df['prev_std_above']==1) & (self.backtest_df['std_above']==0)
 
-        close_zscore_Up   = (self.backtest_df['close_zscore_above']==1)
+        close_zscore_Up = (self.backtest_df['close_zscore_above']==1)
         close_zscore_Down = (self.backtest_df['close_zscore_above']==0)        
-        close_zscore_CrossUp   = (self.backtest_df['prev_close_zscore_above']==0) & (self.backtest_df['close_zscore_above']==1)
+        close_zscore_CrossUp = (self.backtest_df['prev_close_zscore_above']==0) & (self.backtest_df['close_zscore_above']==1)
         close_zscore_CrossDown = (self.backtest_df['prev_close_zscore_above']==1) & (self.backtest_df['close_zscore_above']==0)
   
 
         # 3. Define the Long/Short in Entry/Exit 
-        self.backtest_df['entry_long']  = np.where( (std_Down & close_zscore_Up), True, False)
+        self.backtest_df['entry_long'] = np.where( (std_Down & close_zscore_Up), True, False)
         self.backtest_df['entry_short'] = np.where( (std_Up & close_zscore_Down), True, False)
-        self.backtest_df['exit_long']  = np.where( (std_CrossUp & close_zscore_CrossDown), True, False)
+        self.backtest_df['exit_long'] = np.where( (std_CrossUp & close_zscore_CrossDown), True, False)
         self.backtest_df['exit_short'] = np.where( (std_CrossDown & close_zscore_CrossUp), True, False)
 
         # 4. Run Backtest
