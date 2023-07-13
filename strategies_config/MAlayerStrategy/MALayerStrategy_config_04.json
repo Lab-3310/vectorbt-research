@@ -10,7 +10,7 @@
     "direction": "longonly",
     "prepare_data_param": {
       "ma": 6,
-      "layer": 8
+      "layer": 7
 
     },
     "trading_data_param": {
