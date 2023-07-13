@@ -61,6 +61,6 @@ class MA_layer_strategy(BaseStrategy):
  
 
         # 4. Run Backtest
-        super().run_backtest(self.backtest_df, self.resample)
+        super().run_backtest(self.backtest_df)
       
 
