@@ -5,21 +5,21 @@
     "symbol": "ETHUSDT_UPERP",
     "strategy_class": "MAlayerStrategy",
     "strategy_config": "MALayerStrategy_config_01",
-    "resample": "15min",
+    "resample": "1h",
     "fee": 0.001,
     "direction": "longonly",
     "prepare_data_param": {
-      "ma": 3,
-      "layer": 4
+      "ma": 20,
+      "layer": 5
     },
     "trading_data_param": {
       "SL_mode": "static_price",
-      "SL_pct": 0.03,
+      "SL_pct": 0.02,
       "TP_mode": "static_price",
-      "TP_pct": 0.06
+      "TP_pct": 0.04
     },
     "backtest_setting": {
-      "backtest_time": "2023",
+      "backtest_time": "2022",
       "start_date": "",
       "end_date": "",
       "count_to_now": true
