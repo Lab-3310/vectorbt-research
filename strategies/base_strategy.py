@@ -122,7 +122,7 @@ class BaseStrategy:
             stats_df: pd.DataFrame,
             asset_return_df: pd.DataFrame,
             asset_value_df: pd.DataFrame,
-            cumulative_returns_df: pd.DataFrame,
+            cumulative_returns_df: pd.DataFrame,   
             trade_record_df: pd.DataFrame,
         ):
         save_dir = f'{os.path.dirname(__file__)}/../backtest_result/{self._strategy_class}/{self._strategy_config}'
@@ -142,6 +142,7 @@ class BaseStrategy:
 
     def plot_cumulative_return_trades(self, pf_analyzer):
         pf_analyzer.plot().show()
+        # vbt.plot(pf_analyzer)
     
     def plot_cumulative_drawdown_return(self, pf_analyzer):
         pf_analyzer.qs.plot_snapshot()
