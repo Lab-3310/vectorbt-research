@@ -63,6 +63,9 @@ class BaseStrategy:
         self.backtest_execution(backtest_df)
 
     def backtest_execution(self, backtest_df):
+        """
+        this is the core func to use vectorbt
+        """
         pf_analyzer = vbt.Portfolio.from_signals(
             init_cash=self.capital, 
             sl_stop=self.SL_pct, 
