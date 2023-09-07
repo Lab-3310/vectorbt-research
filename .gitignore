@@ -165,7 +165,6 @@ data_base/
 *.idea/
 
 trader_labs/
-*.ipynb
 
 backtest_notebook.ipynb
 personal_confidential.ini
@@ -177,4 +176,3 @@ personal_confidential.ini
 
 trader_labs/
 config.ini
-*.ipynb
