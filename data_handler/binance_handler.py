@@ -107,9 +107,9 @@ class BinanceHandler:
         download_config.read(config_path) # Load the config.ini file
     
         if platform.system() == "Darwin": # Retrieve the value based on the platform
-            binance_path = download_config.get('binance', 'mac_path')
+            binance_path = download_config.get('path', 'mac_path')
         elif platform.system() == "Windows":
-            binance_path = download_config.get('binance', 'window_path')
+            binance_path = download_config.get('path', 'window_path')
         
         # create the database path file you designated
         os.makedirs(binance_path, exist_ok=True) #TODO need to switch to general path 
