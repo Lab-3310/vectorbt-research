@@ -1,12 +1,69 @@
 import pandas as pd
+import plotly.graph_objects as go
+import plotly.express as px
+import matplotlib.pyplot as plt
 
 
-def ohlcv_resample(df_ohlcv: pd.Dataframe, freq):
-    df = df_ohlcv.copy()
-    df['open'] = df['open'].resample(freq).first()
-    df['high'] = df['high'].resample(freq).max()
-    df['low'] = df['low'].resample(freq).min()
-    df['close'] = df['close'].resample(freq).last()
-    df['volume'] = df['volume'].resample(freq).sum()
-    df.dropna(inplace=True)
-    return df
+def two_parameter_plot(df_data:pd.DataFrame, perf_name:str, par_name1:str, par_name2:str):
+
+    # All_Heatmap
+    fig = go.Figure(data=go.Heatmap(
+            z = df_data[perf_name],
+            x = df_data[par_name1],
+            y = df_data[par_name2],
+            colorscale='Viridis'))
+    fig.update_layout(title = f"All_Heatmap_{perf_name}", width=600, height=400)
+    fig.show()
+
+
+    # Range_Heatmap
+    fig = px.density_heatmap(
+            data_frame = df_data,
+            z = perf_name,
+            x = par_name1,
+            y = par_name2,
+            color_continuous_scale = 'Viridis',
+            title = f"Range_Heatmap_{perf_name}",
+            )
+    fig.update_layout(width=600, height=400)
+    fig.show()
+
+
+    # Histgram
+    fig, ax = plt.subplots(figsize=(6, 4))
+    ax.hist(x = df_data[perf_name], bins=10)
+    plt.title(f"Histgram_{perf_name}", fontsize=18)
+
+    plt.xlabel(perf_name, fontsize=12)
+    plt.ylabel('Times', fontsize=12)
+
+    plt.xticks(fontsize=15)
+    plt.yticks(fontsize=15)
+    plt.show()
+
+
+    # 3D_Surface
+    fig = go.Figure(data=[go.Surface(
+        z = df_data[[perf_name, par_name1, par_name2]].set_index([par_name1, par_name2]).unstack().values,         
+        colorscale='Viridis',)])
+    fig.update_layout(
+        title = f"3D_Surface_{perf_name}",
+        width=900, 
+        height=600)
+    fig.show()
+
+
+
+def three_parameter_plot(df_data:pd.DataFrame, perf_name:str, par_name1:str, par_name2:str, par_name3:str):
+
+    fig = px.scatter_3d(
+        data_frame = df_data,
+        x = par_name1,
+        y = par_name2,
+        z = par_name3,
+        color = perf_name,
+        color_continuous_scale = 'Viridis',
+        title = f'{perf_name}',
+        )
+    fig.update_layout(width=1000, height=600)
+    fig.show()
