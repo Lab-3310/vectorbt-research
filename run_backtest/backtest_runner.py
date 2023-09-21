@@ -17,7 +17,7 @@ from strategies.momentum_strategy import MomentumStrategy
 
 
 if __name__ == '__main__':
-
+    #TODO unser unfriendly
     parser = argparse.ArgumentParser(description="backtest option")
     parser.add_argument('--strategy_class', '-class',required=True ,help='strategy class') 
     parser.add_argument('--strategy_config', '-config',required=True, help='stratgey config')
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     strategy_class = args.strategy_class
     strategy_config = args.strategy_config
 
-    strategy = ExampleStrategy(strategy_class, strategy_config)
+    strategy = ExampleStrategy(strategy_class, strategy_config) # This class need to be uniform
     # TODO
     # make this class uniform
     strategy.run_backtest()

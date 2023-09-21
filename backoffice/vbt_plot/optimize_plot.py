@@ -5,7 +5,16 @@ import matplotlib.pyplot as plt
 
 
 def two_parameter_plot(df_data:pd.DataFrame, perf_name:str, par_name1:str, par_name2:str):
+    
+    """
+    Create and display a set of plots for analyzing two parameters and performance.
 
+    Parameters:
+    df_data (pd.DataFrame): The DataFrame containing the data to be analyzed.
+    perf_name (str): The name of the performance metric column in df_data.
+    par_name1 (str): The name of the first parameter column in df_data.
+    par_name2 (str): The name of the second parameter column in df_data.
+    """
     # All_Heatmap
     fig = go.Figure(data=go.Heatmap(
             z = df_data[perf_name],
@@ -55,6 +64,18 @@ def two_parameter_plot(df_data:pd.DataFrame, perf_name:str, par_name1:str, par_n
 
 
 def three_parameter_plot(df_data:pd.DataFrame, perf_name:str, par_name1:str, par_name2:str, par_name3:str):
+
+    """
+    Create and display a 3D scatter plot for analyzing three parameters and performance.
+
+    Parameters:
+    df_data (pd.DataFrame): The DataFrame containing the data to be analyzed.
+    perf_name (str): The name of the performance metric column in df_data.
+    par_name1 (str): The name of the first parameter column in df_data.
+    par_name2 (str): The name of the second parameter column in df_data.
+    par_name3 (str): The name of the third parameter column in df_data.
+
+    """
 
     fig = px.scatter_3d(
         data_frame = df_data,

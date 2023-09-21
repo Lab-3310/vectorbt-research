@@ -13,17 +13,7 @@ import ccxt
 from ccxt import ExchangeError
 from pathlib import Path
 
-SPOT = 'SPOT'
-UPERP = 'UPERP'
-CPERP = 'CPERP'
-
-MIN1 = '1m'
-HOUR = '1h'
-HOUR4 = '4h'
-DAILY = '1d'
-
-ALL = 'all'
-SELECT = 'select'
+from types_enums.handler_enum import SPOT, UPERP, CPERP, MIN1, HOUR, HOUR4, DAILY, ALL, SELECT
 
 FORMAT = '%Y-%m-%d %H:%M:%S'
 SINCE = datetime(2016, 1, 1) # for crypto
@@ -55,7 +45,7 @@ class BinanceHandler:
         ]
         return select_symbol
     
-    def handler_download(self):
+    def handler_download(self): #HINT -> every data handler will have this attribute
         self.binance_handler_init(SPOT, MIN1, SELECT)
         self.binance_handler_init(SPOT, HOUR, SELECT)
         self.binance_handler_init(SPOT, DAILY, SELECT)
@@ -71,7 +61,7 @@ class BinanceHandler:
             product_option (str): The product option, which can only be one of the following: \n
                 - SPOT: Binance SPOT products.
                 - UPERP: Binance UPERP products. 
-                - CPERP: Binance CPERP products. 
+                - CPERP: Binance CPERP products.
 
             timeframe_option (str): The timeframe option, which can only be one of the following: \n
                 - MIN1: 1 minute Kline data.
@@ -96,33 +86,18 @@ class BinanceHandler:
 
         if symbol_option not in valid_symbol_options:
             raise ValueError(f"Invalid symbol_option. Must be one of {valid_symbol_options}")
-
-
-        # root_path = str(Path.home())
-        # sys.path.append(f'{root_path}/vectorbt-research') # Get the path to the config.ini file based on the user's operating system
-
-        config_path = os.path.expanduser('~/vectorbt-research/config/config.ini')
-    
-        download_config = configparser.ConfigParser()
-        download_config.read(config_path) # Load the config.ini file
-    
-        if platform.system() == "Darwin": # Retrieve the value based on the platform
-            binance_path = download_config.get('path', 'mac_path')
-        elif platform.system() == "Windows":
-            binance_path = download_config.get('path', 'window_path')
-        
-        # create the database path file you designated
+        binance_path = f'{os.path.dirname(__file__)}/../database/BINANCE'
         os.makedirs(binance_path, exist_ok=True) #TODO need to switch to general path 
 
         if product_option == SPOT:
-            data_path = binance_path + f'/BINANCE/SPOT/{timeframe_option}'
+            data_path = binance_path + f'/SPOT/{timeframe_option}'
             client = ccxt.binance()
         elif product_option == UPERP:
-            data_path = binance_path + f'/BINANCE/UPERP/{timeframe_option}'
+            data_path = binance_path + f'/UPERP/{timeframe_option}'
             client = ccxt.binanceusdm()
-        elif product_option == CPERP: 
+        elif product_option == CPERP: # FIND SOME SYMBOL ADD IN SELECT
             #TODO check the product_code from binance, curreently mainly use the SPOT and UPERP in USDT
-            data_path = binance_path + f'/BINANCE/CPERP/{timeframe_option}'
+            data_path = binance_path + f'/CPERP/{timeframe_option}'
             client = ccxt.binancecoinm()
         os.makedirs(data_path, exist_ok=True)
 

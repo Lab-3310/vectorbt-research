@@ -1,6 +1,6 @@
 import yfinance as yf
 import os
-from data_handler.yfinance_enum import yf_pool as pool
+from types_enums.yfinance_enum import yf_pool as pool
 
 class YFinanceHandler:
     """
