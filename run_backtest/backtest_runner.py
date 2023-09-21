@@ -19,14 +19,14 @@ from strategies.momentum_strategy import MomentumStrategy
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="backtest option")
-    parser.add_argument('--strategy_class', '-class',required=True ,help='MM account') 
-    parser.add_argument('--strategy_config', '-config',required=True, help='MM project name')
+    parser.add_argument('--strategy_class', '-class',required=True ,help='strategy class') 
+    parser.add_argument('--strategy_config', '-config',required=True, help='stratgey config')
 
     args = parser.parse_args()
     strategy_class = args.strategy_class
     strategy_config = args.strategy_config
 
-    strategy = DMIStrategy(strategy_class, strategy_config)
+    strategy = ExampleStrategy(strategy_class, strategy_config)
     # TODO
     # make this class uniform
     strategy.run_backtest()
