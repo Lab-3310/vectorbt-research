@@ -3,7 +3,21 @@ from datetime import datetime, timedelta
 
 from types_enums.data_enum import *
 
-def resample_data(min_data, resample_p, end_bar_time=False):
+def resample_data(min_data, resample_p, end_bar_time=False):    
+    """
+    Resamples minute-level financial data to a specified frequency.
+
+    Args:
+        min_data (DataFrame): A DataFrame containing minute-level financial data.
+        resample_p (str): The target frequency for resampling, e.g., '60min' 
+        end_bar_time (bool, optional): Whether to set the timestamp of each bar to the end of the period. Defaults to False.
+
+    Returns:
+        DataFrame: A resampled DataFrame containing open, high, low, close, and volume data.
+
+    Example:
+        resample_data(minute_data, '60min', end_bar_time=True)
+    """
     data_df = pd.DataFrame()
     for col in min_data.columns:
         if 'open' in col:

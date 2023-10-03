@@ -2,7 +2,6 @@ import os, sys
 import platform
 import argparse
 
-
 sys.path.insert(1, os.path.dirname(__file__) + '/..')
 
 # add new strategy 
