@@ -5,14 +5,13 @@ import pandas as pd
 import os
 import sys
 
-sys.path.insert(1, os.path.expanduser('~/Systematic-Sherpa/'))
+sys.path.insert(1, os.path.expanduser('~/Systematic-Sherpa/')) # TODP path fix general way
 
 import backoffice.walk_forward.walkforward_opt as opt
 import backoffice.vbt_plot.optimize_plot as optplot
 
-# Jason 
 
-if __name__ == '__main__':
+def main():
     symbols = ["BTC-USD"]
     data = vbt.YFData.download(symbols, missing_index='drop').get('Close')
     
@@ -35,3 +34,6 @@ if __name__ == '__main__':
     
     # n = int(input('Which trunk would you like to see? '))
     # optplot.two_parameter_plot(res_df[res_df['split_idx'] == n], "total_return", "fast_window", 'slow_window')
+
+if __name__ == '__main__':
+    main()

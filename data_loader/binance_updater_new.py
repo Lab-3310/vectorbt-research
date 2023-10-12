@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.insert(1, os.path.expanduser('~/vectorbt-research/'))
+sys.path.insert(1, os.path.expanduser('~/Systematic-Sherpa/'))
 
 from data_handler.binance_handler import BinanceHandler
 

@@ -4,7 +4,7 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 
 
-def two_parameter_plot(df_data:pd.DataFrame, perf_name:str, par_name1:str, par_name2:str):
+def two_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, par_name2: str, show: False):
     
     """
     Create and display a set of plots for analyzing two parameters and performance.
@@ -22,7 +22,9 @@ def two_parameter_plot(df_data:pd.DataFrame, perf_name:str, par_name1:str, par_n
             y = df_data[par_name2],
             colorscale='Viridis'))
     fig.update_layout(title = f"All_Heatmap_{perf_name}", width=600, height=400)
-    fig.show()
+    fig.write_image(f"path/plot.png") # TODO
+    if show:
+        fig.show()
 
 
     # Range_Heatmap
@@ -35,7 +37,9 @@ def two_parameter_plot(df_data:pd.DataFrame, perf_name:str, par_name1:str, par_n
             title = f"Range_Heatmap_{perf_name}",
             )
     fig.update_layout(width=600, height=400)
-    fig.show()
+    fig.write_image(f"path/plot.png") # TODO
+    if show:
+        fig.show()
 
 
     # Histgram
@@ -59,11 +63,15 @@ def two_parameter_plot(df_data:pd.DataFrame, perf_name:str, par_name1:str, par_n
         title = f"3D_Surface_{perf_name}",
         width=900, 
         height=600)
-    fig.show()
+    
+    fig.write_image(f"path/plot.png") # TODO
+    
+    if show:
+        fig.show()
 
 
 
-def three_parameter_plot(df_data:pd.DataFrame, perf_name:str, par_name1:str, par_name2:str, par_name3:str):
+def three_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, par_name2: str, par_name3: str, show=False):
 
     """
     Create and display a 3D scatter plot for analyzing three parameters and performance.
@@ -87,4 +95,7 @@ def three_parameter_plot(df_data:pd.DataFrame, perf_name:str, par_name1:str, par
         title = f'{perf_name}',
         )
     fig.update_layout(width=1000, height=600)
-    fig.show()
+    fig.write_image(f"path/plot.png") # TODO
+
+    if show:
+        fig.show()
