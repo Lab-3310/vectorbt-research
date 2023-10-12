@@ -1,10 +1,8 @@
 import vectorbt as vbt
 import numpy as np
 
-symbols = ["BTC-USD"]
-price = vbt.YFData.download(symbols, missing_index='drop').get('Close')
 
-def rolling_split(n: int, window_len: int, set_lens: int, left_to_right=False):
+def rolling_split(data, n: int, window_len: int, set_lens: int, left_to_right=False):
     """
     Split a time series into rolling in-sample and out-of-sample sets.
 
@@ -18,7 +16,7 @@ def rolling_split(n: int, window_len: int, set_lens: int, left_to_right=False):
     tuple: A tuple containing two tuples: (in-sample prices, in-sample dates), and (out-of-sample prices, out-of-sample dates).
     """
 
-    (in_sample_prices, in_sample_dates), (out_sample_prices, out_sample_dates) = price.vbt.rolling_split(
+    (in_sample_prices, in_sample_dates), (out_sample_prices, out_sample_dates) = data.vbt.rolling_split(
         n=n,
         window_len=window_len,
         set_lens=(set_lens, ),
@@ -27,7 +25,7 @@ def rolling_split(n: int, window_len: int, set_lens: int, left_to_right=False):
 
     return (in_sample_prices, in_sample_dates), (out_sample_prices, out_sample_dates)
 
-def rolling_split_plot(n: int, window_len: int, set_lens: int, left_to_right=False, plot=True, trace_names=['in_sample', 'out_sample']):
+def rolling_split_plot(data, n: int, window_len: int, set_lens: int, left_to_right=False, plot=True, trace_names=['in_sample', 'out_sample']):
     """
     Generate a plot of rolling in-sample and out-of-sample sets.
 
@@ -43,7 +41,7 @@ def rolling_split_plot(n: int, window_len: int, set_lens: int, left_to_right=Fal
     plotly.graph_objs._figure.Figure: A Plotly figure if plot=True, otherwise None.
     """
 
-    graph = price.vbt.rolling_split(
+    graph = data.vbt.rolling_split(
         n=n,
         window_len=window_len,
         set_lens=(set_lens, ),
@@ -54,7 +52,7 @@ def rolling_split_plot(n: int, window_len: int, set_lens: int, left_to_right=Fal
     
     return graph
 
-def in_sample_prices(n: int, window_len: int, set_lens: int, left_to_right=False):
+def in_sample_prices(data, n: int, window_len: int, set_lens: int, left_to_right=False):
     """
     Get the in-sample prices from a rolling split.
 
@@ -68,7 +66,7 @@ def in_sample_prices(n: int, window_len: int, set_lens: int, left_to_right=False
     pd.Series: In-sample prices.
     """
 
-    (in_sample_prices, in_sample_dates), (out_sample_prices, out_sample_dates) = price.vbt.rolling_split(
+    (in_sample_prices, in_sample_dates), (out_sample_prices, out_sample_dates) = data.vbt.rolling_split(
         n=n,
         window_len=window_len,
         set_lens=(set_lens, ),
