@@ -5,7 +5,7 @@ import pandas as pd
 import os
 import sys
 
-sys.path.insert(1, os.path.expanduser('~/Systematic-Sherpa/')) # TODP path fix general way
+sys.path.insert(1, os.getcwd()) # TODP path fix general way
 
 import backoffice.walk_forward.walkforward_opt as opt
 import backoffice.vbt_plot.optimize_plot as optplot

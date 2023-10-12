@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 
+import os, sys
+sys.path.insert(1, os.getcwd()) # TODP path fix general way
+
 def get_ticker():
     url = 'https://stockanalysis.com/stocks/'
     html = requests.get(url)
@@ -19,5 +22,11 @@ def get_ticker():
     for i in range(1,len(const_data)):
         d = const_data[i].split(',')
         tickers.append(d[0][1:-1])
+    print('here')
     return tickers
+
+
+if __name__ == '__main__':
+    get_ticker()
+
 
