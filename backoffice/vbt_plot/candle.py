@@ -3,25 +3,49 @@ import pandas as pd
 import numpy as np
 import datetime
 
-#symbols = ["BTC-USD"]
+#symbol = ["BTC-USD"]
 
+def get_trade_example_plot():
+    # fig = price.vbt.plot(trace_kwargs=dict(name='Close'))
+    # fast_ma.ma.vbt.plot(trace_kwargs=dict(name='Fast MA'), fig=fig)
+    # slow_ma.ma.vbt.plot(trace_kwargs=dict(name='Slow MA'), fig=fig)
+    # pf.positions.plot(close_trace_kwargs=dict(visible=False), fig=fig)
+    pass
 
-def candal_graph(symbols):
+def get_yearly_return_plot(pf, with_benchmark=True):
+    price = vbt.YFData.download('BTC-USD').get('Close')
+    returns = price.vbt.to_returns()
+    if with_benchmark:
+        fig = pf.qs.plot_yearly_returns()
+    else:
+        fig = returns.vbt.returns.qs.plot_yearly_returns()
+    return fig
+
+def get_return_and_mdd(returns):
+    fig = returns.vbt.returns.qs.plots_report()
+    return fig
+
+def get_monthly_metric_plot(pf):
+    fig = pf.qs.plots_report()
+    return fig
+
+def candle_graph(symbol, show = False):
     """
-    Generate a candlestick chart for a list of symbols using Yahoo Finance data.
+    Generate a candlestick chart for a list of symbol using Yahoo Finance data.
 
     Parameters:
-    symbols (list of str): A list of stock symbols to fetch data for and create the candlestick chart.
+    symbol (list of str): A list of stock symbol to fetch data for and create the candlestick chart.
     ex:'BTC-USD'
 
     Returns:
     None
     """
-    price_close = vbt.YFData.download(symbols).get('Close')
-    price_high = vbt.YFData.download(symbols).get('High')
-    price_open = vbt.YFData.download(symbols).get('Open')
-    price_low = vbt.YFData.download(symbols).get('Low')
-    price_volume = vbt.YFData.download(symbols).get('Volume')
+    # TODO plot width, height
+    price_close = vbt.YFData.download(symbol).get('Close')
+    price_high = vbt.YFData.download(symbol).get('High')
+    price_open = vbt.YFData.download(symbol).get('Open')
+    price_low = vbt.YFData.download(symbol).get('Low')
+    price_volume = vbt.YFData.download(symbol).get('Volume')
     
     df = pd.DataFrame({
         'my_open1': price_open,
@@ -39,6 +63,9 @@ def candal_graph(symbols):
     )
 
     ohlcv_acc = df.vbt.ohlcv(freq='d', column_names=my_column_names)
-    ohlcv_acc.plot()
+    fig = ohlcv_acc.plot()
+    fig.write_image(f"path/plot.png") # TODO 
+    if show:
+        fig.show()
 
-    return ohlcv_acc.plot()
+    return fig
