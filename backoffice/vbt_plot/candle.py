@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 import datetime
 
-symbols = ["BTC-USD"]
-price = vbt.YFData.download(symbols, missing_index='drop').get('Close')
+#symbols = ["BTC-USD"]
+
 
 def candal_graph(symbols):
     """
@@ -12,6 +12,7 @@ def candal_graph(symbols):
 
     Parameters:
     symbols (list of str): A list of stock symbols to fetch data for and create the candlestick chart.
+    ex:'BTC-USD'
 
     Returns:
     None
@@ -38,6 +39,6 @@ def candal_graph(symbols):
     )
 
     ohlcv_acc = df.vbt.ohlcv(freq='d', column_names=my_column_names)
-    ohlcv_acc.plots(settings=dict(plot_type='candlestick'))
+    ohlcv_acc.plot()
 
-    return None
+    return ohlcv_acc.plot()

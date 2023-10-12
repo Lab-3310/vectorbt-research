@@ -3,8 +3,6 @@ import pandas as pd
 import numpy as np
 import datetime
 
-symbols = ["BTC-USD"]
-price = vbt.YFData.download(symbols, missing_index='drop').get('Close')
 
 def show_stats(pf):
     """
@@ -12,6 +10,7 @@ def show_stats(pf):
 
     Parameters:
     pf (QuantStats): The QuantStats portfolio object to generate a plots report for.
+    type of pf :<vectorbt.portfolio.base.Portfolio at 0x14af11f40>
 
     Returns:
     None
