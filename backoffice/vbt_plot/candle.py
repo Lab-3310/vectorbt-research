@@ -39,6 +39,7 @@ def candal_graph(symbols):
     )
 
     ohlcv_acc = df.vbt.ohlcv(freq='d', column_names=my_column_names)
-    ohlcv_acc.plot()
+    ohlcv_acc.plot().show()
 
-    return ohlcv_acc.plot()
+
+    return None
