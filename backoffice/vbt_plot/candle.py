@@ -2,7 +2,7 @@ import vectorbt as vbt
 import pandas as pd 
 import numpy as np
 import datetime
-
+import os, sys 
 #symbol = ["BTC-USD"]
 
 def get_trade_example_plot():
@@ -29,17 +29,7 @@ def get_monthly_metric_plot(pf):
     fig = pf.qs.plots_report()
     return fig
 
-def candle_graph(symbol, show = False):
-    """
-    Generate a candlestick chart for a list of symbol using Yahoo Finance data.
-
-    Parameters:
-    symbol (list of str): A list of stock symbol to fetch data for and create the candlestick chart.
-    ex:'BTC-USD'
-
-    Returns:
-    None
-    """
+def candle_graph(symbol):
     # TODO plot width, height
     price_close = vbt.YFData.download(symbol).get('Close')
     price_high = vbt.YFData.download(symbol).get('High')
@@ -64,8 +54,7 @@ def candle_graph(symbol, show = False):
 
     ohlcv_acc = df.vbt.ohlcv(freq='d', column_names=my_column_names)
     fig = ohlcv_acc.plot()
-    fig.write_image(f"path/plot.png") # TODO 
-    if show:
-        fig.show()
+    fig.write_image(os.path.expanduser('~/Systematic-Sherpa/script/image/plot_candle.png')) # TODO 
+    fig.show()
 
     return fig
