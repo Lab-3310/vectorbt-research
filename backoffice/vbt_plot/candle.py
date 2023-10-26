@@ -2,7 +2,7 @@ import vectorbt as vbt
 import pandas as pd 
 import numpy as np
 import datetime
-
+import os, sys 
 #symbol = ["BTC-USD"]
 
 def get_trade_example_plot():
