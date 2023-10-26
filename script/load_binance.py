@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.insert(1, os.path.expanduser('/Users/chouwilliam/Lab3310Projects/Systematic-Sherpa'))
+sys.path.insert(1, f"{os.getcwd()}/..")
 
 from data_handler.binance_handler import BinanceHandler
 

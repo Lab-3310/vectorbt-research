@@ -5,10 +5,11 @@ import pandas as pd
 import os
 import sys
 
-sys.path.insert(1, os.getcwd()) # TODP path fix general way
+sys.path.insert(1, f"{os.getcwd()}/..")
+
 
 import backoffice.walk_forward.walkforward_opt as opt
-import backoffice.vbt_plot.optimize_plot as optplot
+#import backoffice.vbt_plot.optimize_plot as optplot
 
 
 def main():
@@ -29,9 +30,12 @@ def main():
 
     res_df = pd.DataFrame(res).reset_index()
 
-    for i in range(28):
-        optplot.two_parameter_plot(res_df[res_df['split_idx'] == i], "total_return", "fast_window", 'slow_window')
-    
+    # for i in range(28):
+    #     optplot.two_parameter_plot(res_df[res_df['split_idx'] == i], "total_return", "fast_window", 'slow_window')
+
+
+
+
     # n = int(input('Which trunk would you like to see? '))
     # optplot.two_parameter_plot(res_df[res_df['split_idx'] == n], "total_return", "fast_window", 'slow_window')
 
