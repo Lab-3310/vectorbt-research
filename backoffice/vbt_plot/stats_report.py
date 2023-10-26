@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 
 class startegy_stat:
-    def __init__(self,symbol,pf) -> None:
+    def __init__(self,pf) -> None:
         pass
 
     def show_recoard():
@@ -15,7 +15,7 @@ class startegy_stat:
     
     def show_position_plot():
         fig = pf.positions.plot()
-        fig.write_image(os.path.expanduser('~/Systematic-Sherpa/script/image/plot_candle.png')) # TODO 
+        fig.write_image(os.path.expanduser('~/Systematic-Sherpa/script/image/position_plot.png')) # TODO 
         fig.show()
         return fig
 
