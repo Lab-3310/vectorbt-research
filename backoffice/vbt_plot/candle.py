@@ -64,8 +64,7 @@ def candle_graph(symbol, show = False):
 
     ohlcv_acc = df.vbt.ohlcv(freq='d', column_names=my_column_names)
     fig = ohlcv_acc.plot()
-    fig.write_image(f"path/plot.png") # TODO 
-    if show:
-        fig.show()
+    fig.write_image(os.path.expanduser('~/Systematic-Sherpa/script/image/plot_candle.png')) # TODO 
+    fig.show()
 
     return fig
