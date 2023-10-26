@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.insert(1, os.path.expanduser('~/Systematic-Sherpa')) # TODP path fix general way
+sys.path.insert(1, f"{os.getcwd()}/..")
 
 from backoffice.vbt_plot.candle import candle_graph
 
