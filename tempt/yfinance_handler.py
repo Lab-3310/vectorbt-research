@@ -22,7 +22,7 @@ class YFinanceHandler:
         print('yfinance handler init')
 
     def handler_download(self):
-        os.makedirs(f'{os.path.dirname(__file__)}/../database/YFIN', exist_ok=True) 
+        os.makedirs(f'{os.path.dirname(__file__)}/../data_base/YFIN', exist_ok=True) 
         #TODO why in finlab, binance is /../..??, need to switch to general path 
         self.save_ohlcv_dict_to_df()
 
@@ -106,7 +106,7 @@ class YFinanceHandler:
         ohlcv_dict = self.get_ohlcv_dict()
         for key, df in ohlcv_dict.items():
             file_name = f'{key}.csv'  # Constructing the file name based on the key
-            dir = f'{os.path.dirname(__file__)}/../database/YFIN/'
+            dir = f'{os.path.dirname(__file__)}/../data_base/YFIN/'
             file_path = os.path.join(dir, file_name)
             df.to_csv(file_path)
         print('yfinance data saved')

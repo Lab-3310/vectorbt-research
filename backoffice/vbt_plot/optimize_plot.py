@@ -2,9 +2,12 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 import matplotlib.pyplot as plt
+import os
 
+fig_path = f"{os.getcwd()}/../data_base/OPTIMIZATION"
+os.makedirs(fig_path, exist_ok=True)
 
-def two_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, par_name2: str, show: False):
+def two_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, par_name2: str, fig_name: str=None, show: bool=False):
     
     """
     Create and display a set of plots for analyzing two parameters and performance.
@@ -15,6 +18,7 @@ def two_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, pa
     par_name1 (str): The name of the first parameter column in df_data.
     par_name2 (str): The name of the second parameter column in df_data.
     """
+
     # All_Heatmap
     fig = go.Figure(data=go.Heatmap(
             z = df_data[perf_name],
@@ -22,7 +26,7 @@ def two_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, pa
             y = df_data[par_name2],
             colorscale='Viridis'))
     fig.update_layout(title = f"All_Heatmap_{perf_name}", width=600, height=400)
-    fig.write_image(f"path/plot.png") # TODO
+    #fig.write_image(f"{fig_path}/all_heatmap.png") # TODO:save the figure in right path
     if show:
         fig.show()
 
@@ -37,7 +41,7 @@ def two_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, pa
             title = f"Range_Heatmap_{perf_name}",
             )
     fig.update_layout(width=600, height=400)
-    fig.write_image(f"path/plot.png") # TODO
+    #fig.write_image(f"{fig_path}/range_heatmap.png") # TODO:save the figure in right path
     if show:
         fig.show()
 
@@ -46,13 +50,14 @@ def two_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, pa
     fig, ax = plt.subplots(figsize=(6, 4))
     ax.hist(x = df_data[perf_name], bins=10)
     plt.title(f"Histgram_{perf_name}", fontsize=18)
-
     plt.xlabel(perf_name, fontsize=12)
     plt.ylabel('Times', fontsize=12)
-
     plt.xticks(fontsize=15)
     plt.yticks(fontsize=15)
-    plt.show()
+    #fig.savefig(f"{fig_path}/histgram.png") # TODO:save the figure in right path
+
+    if show:
+        plt.show()
 
 
     # 3D_Surface
@@ -63,8 +68,7 @@ def two_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, pa
         title = f"3D_Surface_{perf_name}",
         width=900, 
         height=600)
-    
-    fig.write_image(f"path/plot.png") # TODO
+    #fig.write_image(f"{fig_path}/plot.png") # TODO:save the figure in right path
     
     if show:
         fig.show()
@@ -95,7 +99,7 @@ def three_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, 
         title = f'{perf_name}',
         )
     fig.update_layout(width=1000, height=600)
-    fig.write_image(f"path/plot.png") # TODO
+    #fig.write_image(f"{fig_path}/plot.png") # TODO:save the figure in right path
 
     if show:
         fig.show()

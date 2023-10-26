@@ -2,10 +2,6 @@ import yfinance as yf
 import os
 from types_enums.yfinance_enum import yf_pool as pool
 
-import configparser
-import platform
-import pandas as pd
-
 class YFinanceHandler:
     """
     A class for handling Yahoo Finance daily data retrieval and processing.
@@ -26,11 +22,8 @@ class YFinanceHandler:
         print('yfinance handler init')
 
     def handler_download(self):
-        """
-        solve path problem in the func "save_ohlcv_dict_to_df()"
-        """
-        # os.makedirs(f'{os.path.dirname(__file__)}/../database/YFIN', exist_ok=True) 
-        # #TODO why in finlab, binance is /../..??, need to switch to general path 
+        os.makedirs(f'{os.path.dirname(__file__)}/../data_base/YFIN', exist_ok=True) 
+        #TODO why in finlab, binance is /../..??, need to switch to general path 
         self.save_ohlcv_dict_to_df()
 
     def get_yf_result(self):
@@ -111,24 +104,10 @@ class YFinanceHandler:
     
     def save_ohlcv_dict_to_df(self):
         ohlcv_dict = self.get_ohlcv_dict()
-
-        config_path = os.path.expanduser('~/vectorbt-research/config/config.ini')
-        download_config = configparser.ConfigParser()
-        download_config.read(config_path) # Load the config.ini file
-        if platform.system() == "Darwin": # Retrieve the value based on the platform
-            yfinance_path = download_config.get('path', 'mac_path')
-        elif platform.system() == "Windows":
-            yfinance_path = download_config.get('path', 'window_path')
-        
-        # create the database path file you designated
-        data_path = yfinance_path + f'/YFIN'
-        os.makedirs(data_path,  exist_ok=True)
-
-
         for key, df in ohlcv_dict.items():
             file_name = f'{key}.csv'  # Constructing the file name based on the key
-            file_path = os.path.join(data_path, file_name)
+            dir = f'{os.path.dirname(__file__)}/../data_base/YFIN/'
+            file_path = os.path.join(dir, file_name)
             df.to_csv(file_path)
         print('yfinance data saved')
-
 
