@@ -15,9 +15,11 @@ def main():
     symbols = ["BTC-USD"]
     data = vbt.YFData.download(symbols, missing_index='drop').get('Close')
 
-    w = WalkForwardOpt()
-    w.rolling_split_plot(data, 28, 360, 108).show() # Visiualization of current trunk split.
-    price = w.in_sample_prices(data, 28, 360, 108) # Get in-sample prices from splitted trunks.
+    # w = WalkForwardOpt()
+    walk_forward_handler = WalkForwardOpt(data, 28, 360, 108)
+
+    walk_forward_handler.rolling_split_plot().show() # Visiualization of current trunk split.
+    price = walk_forward_handler.in_sample_prices() # Get in-sample prices from splitted trunks.
 
     fast_ma, slow_ma = vbt.MA.run_combs(price, window=np.arange(1, 25), r=2, short_names=['fast', 'slow'])
     entries = fast_ma.ma_crossed_above(slow_ma)
@@ -26,7 +28,7 @@ def main():
     pf = vbt.Portfolio.from_signals(price, entries, exits)
     res = pf.total_return()
 
-    w.get_optimal(res) # Show optimal parameters in every trunk.
+    walk_forward_handler.get_optimal(res) # Show optimal parameters in every trunk.
 
     res_df = pd.DataFrame(res).reset_index()
 
