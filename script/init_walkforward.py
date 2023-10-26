@@ -5,7 +5,7 @@ import pandas as pd
 import os
 import sys
 
-sys.path.insert(1, f"{os.getcwd()}/..")
+sys.path.insert(1, f"{os.path.dirname(__file__)}/../")
 
 
 import backoffice.walk_forward.walkforward_opt as opt
