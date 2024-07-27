@@ -86,7 +86,7 @@ class BinanceHandler:
 
         if symbol_option not in valid_symbol_options:
             raise ValueError(f"Invalid symbol_option. Must be one of {valid_symbol_options}")
-        binance_path = f'{os.path.dirname(__file__)}/../data_base/BINANCE'
+        binance_path = f'/Users/chouwilliam/MBQ/01-crypto-data/SPOT'
         os.makedirs(binance_path, exist_ok=True) #TODO need to switch to general path 
 
         if product_option == SPOT:
