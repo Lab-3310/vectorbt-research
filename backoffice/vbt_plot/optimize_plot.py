@@ -4,7 +4,7 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import os
 
-fig_path = f"{os.getcwd()}/../data_base/OPTIMIZATION"
+fig_path = f"{os.path.dirname(__file__)}/../data_base/OPTIMIZATION"
 os.makedirs(fig_path, exist_ok=True)
 
 def two_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, par_name2: str, fig_name: str=None, show: bool=False):

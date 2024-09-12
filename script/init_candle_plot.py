@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.insert(1, f"{os.getcwd()}/..")
+sys.path.insert(1, f"{os.path.dirname(__file__)}/../")
 
 from backoffice.vbt_plot.candle import candle_graph
 
