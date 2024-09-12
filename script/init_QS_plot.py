@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.insert(1, os.path.expanduser('~/Systematic-Sherpa')) # TODP path fix general way
+sys.path.insert(1, f"{os.path.dirname(__file__)}/..") # TODP path fix general way
 
 from backoffice.vbt_plot.stats_report import startegy_stat
 
