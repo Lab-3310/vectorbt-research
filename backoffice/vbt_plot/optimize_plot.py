@@ -47,13 +47,12 @@ def two_parameter_plot(df_data: pd.DataFrame, perf_name: str, par_name1: str, pa
 
 
     # Histgram
-    fig, ax = plt.subplots(figsize=(6, 4))
-    ax.hist(x = df_data[perf_name], bins=10)
-    plt.title(f"Histgram_{perf_name}", fontsize=18)
-    plt.xlabel(perf_name, fontsize=12)
-    plt.ylabel('Times', fontsize=12)
-    plt.xticks(fontsize=15)
-    plt.yticks(fontsize=15)
+    # fig, ax = plt.subplots(figsize=(6, 4))
+    # plt.title(f"Histgram_{perf_name}", fontsize=18)
+    # plt.xlabel(perf_name, fontsize=12)
+    # plt.ylabel('Times', fontsize=12)
+    # plt.xticks(fontsize=15)
+    # plt.yticks(fontsize=15)
     #fig.savefig(f"{fig_path}/histgram.png") # TODO:save the figure in right path
 
     if show:

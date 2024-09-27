@@ -6,4 +6,4 @@ import datetime
 
 from backoffice.vbt_plot.candle import candle_graph
 
-candle_graph('BTC-USD')
+# candle_graph('BTC-USD') 
